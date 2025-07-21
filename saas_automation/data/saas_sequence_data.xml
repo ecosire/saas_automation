@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Sequence for SaaS Instance -->
+        <record id="seq_saas_instance" model="ir.sequence">
+            <field name="name">SaaS Instance</field>
+            <field name="code">saas.instance</field>
+            <field name="prefix">INST</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <!-- Sequence for SaaS Subscription -->
+        <record id="seq_saas_subscription" model="ir.sequence">
+            <field name="name">SaaS Subscription</field>
+            <field name="code">saas.subscription</field>
+            <field name="prefix">SUB</field>
+            <field name="padding">5</field>
+            <field name="company_id" eval="False"/>
+        </record>
+    </data>
+</odoo> 

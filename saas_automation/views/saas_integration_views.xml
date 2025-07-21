@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_saas_integration_tree" model="ir.ui.view">
+        <field name="name">saas.integration.tree</field>
+        <field name="model">saas.integration</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="integration_type"/>
+                <field name="system_name"/>
+                <field name="base_url"/>
+                <field name="is_active"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_saas_integration_form" model="ir.ui.view">
+        <field name="name">saas.integration.form</field>
+        <field name="model">saas.integration</field>
+        <field name="arch" type="xml">
+            <form string="SaaS Integration">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="integration_type"/>
+                        <field name="system_name"/>
+                        <field name="base_url"/>
+                        <field name="api_key"/>
+                        <field name="is_active"/>
+                        <field name="notes"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_saas_integration" model="ir.actions.act_window">
+        <field name="name">SaaS Integrations</field>
+        <field name="res_model">saas.integration</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Manage third-party integrations (payment gateways, APIs, etc.).
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_saas_integration_action" name="Integrations" parent="menu_saas_root" action="action_saas_integration" sequence="80"/>
+</odoo> 

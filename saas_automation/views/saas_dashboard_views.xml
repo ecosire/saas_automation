@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="saas_dashboard_action" model="ir.actions.act_window">
+            <field name="name">SaaS Dashboard</field>
+            <field name="res_model">saas.dashboard</field>
+            <field name="view_mode">kanban</field>
+            <field name="view_id" ref="saas_dashboard_view_kanban"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Welcome to your SaaS Dashboard!
+                </p>
+            </field>
+        </record>
+
+        <record id="saas_dashboard_view_kanban" model="ir.ui.view">
+            <field name="name">saas.dashboard.kanban</field>
+            <field name="model">saas.dashboard</field>
+            <field name="arch" type="xml">
+                <kanban class="o_kanban_dashboard">
+                    <field name="name"/>
+                    <field name="total_instances"/>
+                    <field name="active_instances"/>
+                    <field name="active_users"/>
+                    <field name="mrr"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click">
+                                <div class="o_kanban_card_header">
+                                    <div class="o_kanban_card_header_title">
+                                        <div class="o_primary">
+                                            <span><t t-esc="record.name.value"/></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="o_kanban_card_content">
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <strong>Total Instances:</strong>
+                                            <t t-esc="record.total_instances.value"/>
+                                        </div>
+                                        <div class="col-6">
+                                            <strong>Active Instances:</strong>
+                                            <t t-esc="record.active_instances.value"/>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-6">
+                                            <strong>Active Users:</strong>
+                                            <t t-esc="record.active_users.value"/>
+                                        </div>
+                                        <div class="col-6">
+                                            <strong>MRR:</strong>
+                                            <t t-esc="record.mrr.value"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record id="saas_dashboard_data" model="saas.dashboard">
+            <field name="name">SaaS Overview</field>
+        </record>
+    </data>
+</odoo> 

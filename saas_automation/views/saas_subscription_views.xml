@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- saas.subscription list view -->
+        <record id="saas_subscription_view_list" model="ir.ui.view">
+            <field name="name">saas.subscription.view.list</field>
+            <field name="model">saas.subscription</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="instance_id"/>
+                    <field name="plan_id"/>
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                    <field name="state"/>
+                </list>
+            </field>
+        </record>
+
+        <!-- saas.subscription form view -->
+        <record id="saas_subscription_view_form" model="ir.ui.view">
+            <field name="name">saas.subscription.view.form</field>
+            <field name="model">saas.subscription</field>
+            <field name="arch" type="xml">
+                <form string="SaaS Subscription">
+                    <header>
+                        <button name="action_activate_subscription" string="Activate" type="object" class="oe_highlight" invisible="state != 'draft'"/>
+                        <button name="action_suspend_subscription" string="Suspend" type="object" invisible="state != 'active'"/>
+                        <button name="action_resume_subscription" string="Resume" type="object" invisible="state != 'suspended'"/>
+                        <button name="action_cancel_subscription" string="Cancel" type="object" invisible="state not in ['draft', 'active', 'suspended']"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,active,suspended,cancelled,expired"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="partner_id"/>
+                                <field name="instance_id"/>
+                            </group>
+                            <group>
+                                <field name="plan_id"/>
+                                <field name="price"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="start_date"/>
+                                <field name="end_date"/>
+                            </group>
+                            <group>
+                                <field name="recurring_interval"/>
+                                <field name="recurring_rule_type"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Notes">
+                                <field name="notes"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids"/>
+                        <field name="activity_ids"/>
+                        <field name="message_ids"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <!-- saas.subscription action window -->
+        <record id="saas_subscription_action" model="ir.actions.act_window">
+            <field name="name">SaaS Subscriptions</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">saas.subscription</field>
+            <field name="view_mode">list,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new SaaS subscription.
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo> 

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- SaaS Subscription Plans -->
+        <record id="saas_plan_basic" model="saas.plan">
+            <field name="name">Basic Plan</field>
+            <field name="price_monthly">19.99</field>
+            <field name="price_yearly">199.99</field>
+            <field name="max_users">5</field>
+            <field name="max_instances">1</field>
+            <field name="is_active">True</field>
+        </record>
+        
+        <record id="saas_plan_standard" model="saas.plan">
+            <field name="name">Standard Plan</field>
+            <field name="price_monthly">49.99</field>
+            <field name="price_yearly">499.99</field>
+            <field name="max_users">20</field>
+            <field name="max_instances">5</field>
+            <field name="is_active">True</field>
+        </record>
+
+        <record id="saas_plan_premium" model="saas.plan">
+            <field name="name">Premium Plan</field>
+            <field name="price_monthly">99.99</field>
+            <field name="price_yearly">999.99</field>
+            <field name="max_users">100</field>
+            <field name="max_instances">20</field>
+            <field name="is_active">True</field>
+        </record>
+    </data>
+</odoo> 

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="saas_backup_restore_wizard_view_form" model="ir.ui.view">
+            <field name="name">saas.backup.restore.wizard.view.form</field>
+            <field name="model">saas.backup.restore.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Backup/Restore Instance">
+                    <group>
+                        <field name="instance_id"/>
+                        <field name="backup_file" filename="backup_file_name"/>
+                        <field name="backup_file_name" invisible="1"/>
+                    </group>
+                    <footer>
+                        <button name="action_backup_instance" string="Backup" type="object" class="btn-primary"/>
+                        <button name="action_restore_instance" string="Restore" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_saas_backup_restore_wizard" model="ir.actions.act_window">
+            <field name="name">Backup/Restore Instance</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">saas.backup.restore.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="menu_saas_backup_restore_wizard"
+                  name="Backup/Restore"
+                  parent="saas_menu_instances"
+                  action="action_saas_backup_restore_wizard"
+                  sequence="2"/>
+    </data>
+</odoo> 

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_saas_analytics_tree" model="ir.ui.view">
+        <field name="name">saas.analytics.tree</field>
+        <field name="model">saas.analytics</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="instance_id"/>
+                <field name="date"/>
+                <field name="active_users"/>
+                <field name="cpu_usage"/>
+                <field name="memory_usage"/>
+                <field name="storage_usage"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_saas_analytics_form" model="ir.ui.view">
+        <field name="name">saas.analytics.form</field>
+        <field name="model">saas.analytics</field>
+        <field name="arch" type="xml">
+            <form string="SaaS Analytics">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="instance_id"/>
+                        <field name="date"/>
+                        <field name="active_users"/>
+                        <field name="cpu_usage"/>
+                        <field name="memory_usage"/>
+                        <field name="storage_usage"/>
+                        <field name="kpi_json"/>
+                        <field name="notes"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_saas_analytics" model="ir.actions.act_window">
+        <field name="name">SaaS Analytics</field>
+        <field name="res_model">saas.analytics</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                View and analyze SaaS usage and KPIs.
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_saas_analytics_action" name="Analytics" parent="menu_saas_root" action="action_saas_analytics" sequence="60"/>
+</odoo> 

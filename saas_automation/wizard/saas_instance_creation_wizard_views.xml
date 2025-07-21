@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="saas_instance_creation_wizard_view_form" model="ir.ui.view">
+            <field name="name">saas.instance.creation.wizard.view.form</field>
+            <field name="model">saas.instance.creation.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Create SaaS Instance">
+                    <group>
+                        <field name="partner_id"/>
+                        <field name="plan_id"/>
+                        <field name="subdomain"/>
+                    </group>
+                    <footer>
+                        <button name="action_create_instance" string="Create Instance" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_saas_instance_creation_wizard" model="ir.actions.act_window">
+            <field name="name">Create SaaS Instance</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">saas.instance.creation.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="menu_saas_instance_creation_wizard"
+                  name="Create Instance"
+                  parent="saas_menu_instances"
+                  action="action_saas_instance_creation_wizard"
+                  sequence="1"/>
+    </data>
+</odoo> 

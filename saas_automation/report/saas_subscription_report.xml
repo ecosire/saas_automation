@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="action_report_saas_subscription" model="ir.actions.report">
+            <field name="name">Subscription Details</field>
+            <field name="model">saas.subscription</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">saas_automation.report_saas_subscription_template</field>
+            <field name="report_file">saas_automation.report_saas_subscription_template</field>
+            <field name="binding_model_id" ref="model_saas_subscription"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <template id="report_saas_subscription_template">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-call="web.external_layout">
+                        <div class="page">
+                            <h2>Subscription Details: <span t-field="doc.name"/></h2>
+                            <p><strong>Customer:</strong> <span t-field="doc.partner_id.name"/></p>
+                            <p><strong>Plan:</strong> <span t-field="doc.plan_id.name"/></p>
+                            <p><strong>Instance:</strong> <span t-field="doc.instance_id.name"/></p>
+                            <p><strong>Status:</strong> <span t-field="doc.state"/></p>
+                        </div>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo> 

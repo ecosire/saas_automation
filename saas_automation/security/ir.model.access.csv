@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_saas_instance_manager,saas.instance manager,model_saas_instance,group_saas_manager,1,1,1,1
+access_saas_server_manager,saas.server manager,model_saas_server,group_saas_manager,1,1,1,1
+access_saas_plan_manager,saas.plan manager,model_saas_plan,group_saas_manager,1,1,1,1
+access_saas_subscription_manager,saas.subscription manager,model_saas_subscription,group_saas_manager,1,1,1,1
+access_saas_billing_manager,saas.billing manager,model_saas_billing,group_saas_manager,1,1,1,1
+access_saas_analytics_manager,saas.analytics manager,model_saas_analytics,group_saas_manager,1,1,1,1
+access_saas_automation_manager,saas.automation manager,model_saas_automation,group_saas_manager,1,1,1,1
+access_saas_integration_manager,saas.integration manager,model_saas_integration,group_saas_manager,1,1,1,1 

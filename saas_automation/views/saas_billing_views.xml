@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_saas_billing_tree" model="ir.ui.view">
+        <field name="name">saas.billing.tree</field>
+        <field name="model">saas.billing</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="subscription_id"/>
+                <field name="partner_id"/>
+                <field name="invoice_date"/>
+                <field name="amount_total"/>
+                <field name="state"/>
+                <field name="payment_date"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_saas_billing_form" model="ir.ui.view">
+        <field name="name">saas.billing.form</field>
+        <field name="model">saas.billing</field>
+        <field name="arch" type="xml">
+            <form string="SaaS Billing">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="subscription_id"/>
+                        <field name="partner_id"/>
+                        <field name="invoice_date"/>
+                        <field name="amount_total"/>
+                        <field name="state"/>
+                        <field name="payment_date"/>
+                        <field name="notes"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_saas_billing" model="ir.actions.act_window">
+        <field name="name">SaaS Billing</field>
+        <field name="res_model">saas.billing</field>
+        <field name="view_mode">tree,form</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Manage billing and invoices for SaaS subscriptions.
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_saas_billing_action" name="Billing" parent="menu_saas_root" action="action_saas_billing" sequence="50"/>
+</odoo> 
