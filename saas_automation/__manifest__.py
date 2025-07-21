@@ -77,7 +77,7 @@ Contact: info@ecosire.com | Website: https://www.ecosire.com
     'website': 'https://www.ecosire.com',
     'depends': [
         'base', 'web', 'mail', 'portal', 'website', 'website_sale', 'sale_management',
-        'account', 'account_accountant', 'product', 'uom', 'res_partner', 'res_company',
+        'account', 'account_accountant', 'product', 'uom',
         'base_automation', 'web_dashboard', 'web_cohort', 'rating', 'sms', 'payment', 'l10n_generic_coa'
     ],
     'external_dependencies': {
