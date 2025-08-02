@@ -6,13 +6,14 @@ _logger = logging.getLogger(__name__)
 
 def get_nginx_config(instance):
     """Generates the Nginx configuration for the specified instance."""
+    port = getattr(instance, 'port', 8069)  # Default to 8069 if port field doesn't exist
     return f"""
 server {{
     listen 80;
     server_name {instance.custom_domain};
 
     location / {{
-        proxy_pass http://{instance.server_id.host}:{instance.port};
+        proxy_pass http://{instance.server_id.host}:{port};
         proxy_set_header Host $host;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;

@@ -34,6 +34,7 @@ class SaasInstance(models.Model):
     is_trial = fields.Boolean(string='Trial', default=False, tracking=True)
     custom_domain = fields.Char(string='Custom Domain', tracking=True)
     is_custom_domain_active = fields.Boolean(string='Custom Domain Active', default=False, tracking=True)
+    port = fields.Integer(string='Port', default=8069, tracking=True, help="Port number for the Odoo instance")
     notes = fields.Text(string='Notes')
 
     @api.model

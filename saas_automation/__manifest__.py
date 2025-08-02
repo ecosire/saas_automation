@@ -3,12 +3,12 @@
     'version': '18.0.1.0.0',
     'category': 'SaaS/Cloud Management',
     'sequence': 10,
-    'summary': 'Enterprise-Grade SaaS Platform with Advanced Automation & Analytics',
+    'summary': 'Enterprise-Grade SaaS Platform with Docker Automation & Analytics',
     'description': """
 🚀 ENTERPRISE-GRADE SAAS AUTOMATION PLATFORM
 
 Core SaaS Management:
-- Multi-tenant instance management with Docker/Kubernetes support
+- Multi-tenant instance management with Docker support
 - Automated database creation, backup, and restoration
 - Multi-server deployment with load balancing
 - Custom domain management with SSL certificates
@@ -76,16 +76,18 @@ Contact: info@ecosire.com | Website: https://www.ecosire.com
     'author': 'ECOSIRE (PRIVATE) LIMITED',
     'website': 'https://www.ecosire.com',
     'depends': [
-        'base', 'web'
+        'base', 'web', 'mail', 'portal', 'website', 'website_sale', 'sale_management',
+        'account', 'product', 'uom',
+        'base_automation', 'rating', 'sms', 'payment'
     ],
     'external_dependencies': {
         'python': [
-            'paramiko', 'docker', 'kubernetes', 'requests', 'cryptography',
-            'psycopg2-binary', 'redis', 'celery'
+            'paramiko', 'docker', 'requests', 'cryptography',
+            'psycopg2', 'redis', 'celery'
         ],
     },
     'data': [
-        # Security
+        # Security (load first to avoid conflicts)
         'security/saas_security.xml',
         'security/ir.model.access.csv',
         # Data
@@ -94,37 +96,34 @@ Contact: info@ecosire.com | Website: https://www.ecosire.com
         'data/saas_plan_data.xml',
         'data/saas_product_data.xml',
         'data/saas_cron_data.xml',
-        'data/mail_template_data.xml',
-        'data/saas_demo_data.xml',
+        # 'data/mail_template_data.xml',
+        # 'data/saas_demo_data.xml',
         # Views
-        'views/saas_menu_views.xml',
+        'views/saas_menu_structure.xml',
         'views/saas_dashboard_views.xml',
         'views/saas_instance_views.xml',
         'views/saas_server_views.xml',
         'views/saas_plan_views.xml',
         'views/saas_subscription_views.xml',
-        'views/saas_billing_views.xml',
-        'views/saas_analytics_views.xml',
         'views/saas_automation_views.xml',
-        'views/saas_security_views.xml',
+        'views/saas_analytics_views.xml',
+        'views/saas_billing_views.xml',
         'views/saas_integration_views.xml',
-        'views/res_partner_views.xml',
-        'views/product_template_views.xml',
-        'views/sale_order_views.xml',
-        'views/account_move_views.xml',
+        'views/saas_menu_views.xml',
+        # 'views/saas_security_views.xml',
         'views/portal_templates.xml',
         'views/pricing_templates.xml',
         # Wizards
         'wizard/saas_instance_creation_wizard_views.xml',
         'wizard/saas_backup_restore_wizard_views.xml',
-        'wizard/saas_migration_wizard_views.xml',
-        'wizard/saas_billing_wizard_views.xml',
-        'wizard/saas_analytics_wizard_views.xml',
+        # 'wizard/saas_migration_wizard_views.xml',
+        # 'wizard/saas_billing_wizard_views.xml',
+        # 'wizard/saas_analytics_wizard_views.xml',
         # Reports
-        'report/saas_reports.xml',
+        # 'report/saas_reports.xml',
         'report/saas_subscription_report.xml',
-        'report/saas_billing_report.xml',
-        'report/saas_analytics_report.xml',
+        # 'report/saas_billing_report.xml',
+        # 'report/saas_analytics_report.xml',
     ],
     'assets': {
         'web.assets_backend': [
@@ -148,4 +147,10 @@ Contact: info@ecosire.com | Website: https://www.ecosire.com
     'application': True,
     'license': 'LGPL-3',
     'post_init_hook': '_saas_post_init_hook',
+    'pre_init_hook': '_saas_pre_init_hook',
+    'uninstall_hook': '_saas_uninstall_hook',
+    'images': [
+        'static/description/cover.png',
+        'static/description/icon.png',
+    ],
 } 

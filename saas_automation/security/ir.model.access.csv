@@ -6,4 +6,4 @@ access_saas_subscription_manager,saas.subscription manager,model_saas_subscripti
 access_saas_billing_manager,saas.billing manager,model_saas_billing,group_saas_manager,1,1,1,1
 access_saas_analytics_manager,saas.analytics manager,model_saas_analytics,group_saas_manager,1,1,1,1
 access_saas_automation_manager,saas.automation manager,model_saas_automation,group_saas_manager,1,1,1,1
-access_saas_integration_manager,saas.integration manager,model_saas_integration,group_saas_manager,1,1,1,1 
+access_saas_integration_manager,saas.integration manager,model_saas_integration,group_saas_manager,1,1,1,1

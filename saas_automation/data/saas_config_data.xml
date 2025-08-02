@@ -6,7 +6,8 @@
             <field name="name">Default Local Server</field>
             <field name="server_type">docker</field>
             <field name="host">127.0.0.1</field>
-            <field name="port">8069</field>
+            <field name="port">22</field>
+            <field name="ssh_user">odoo</field>
             <field name="max_clients">50</field>
             <field name="is_active">True</field>
         </record>

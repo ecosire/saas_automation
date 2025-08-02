@@ -1,1 +1,192 @@
-/* Static CSS file for SaaS Portal */ 
+/* SaaS Portal Styles */
+
+.saas-portal-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.saas-instance-card {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-left: 4px solid #667eea;
+}
+
+.saas-instance-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.saas-instance-name {
+    font-size: 1.3em;
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+.saas-instance-status {
+    padding: 5px 12px;
+    border-radius: 15px;
+    font-size: 0.9em;
+    font-weight: bold;
+}
+
+.saas-instance-status.running {
+    background: #d4edda;
+    color: #155724;
+}
+
+.saas-instance-status.suspended {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.saas-instance-status.deploying {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.saas-instance-details {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.saas-instance-detail {
+    display: flex;
+    flex-direction: column;
+}
+
+.saas-instance-detail-label {
+    font-size: 0.9em;
+    color: #7f8c8d;
+    margin-bottom: 5px;
+}
+
+.saas-instance-detail-value {
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+.saas-instance-actions {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.saas-action-button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.2s ease;
+}
+
+.saas-action-button.primary {
+    background: #667eea;
+    color: white;
+}
+
+.saas-action-button.primary:hover {
+    background: #5a6fd8;
+}
+
+.saas-action-button.secondary {
+    background: #ecf0f1;
+    color: #2c3e50;
+}
+
+.saas-action-button.secondary:hover {
+    background: #d5dbdb;
+}
+
+.saas-action-button.danger {
+    background: #e74c3c;
+    color: white;
+}
+
+.saas-action-button.danger:hover {
+    background: #c0392b;
+}
+
+.saas-subscription-card {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-left: 4px solid #27ae60;
+}
+
+.saas-subscription-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.saas-subscription-plan {
+    font-size: 1.2em;
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+.saas-subscription-price {
+    font-size: 1.1em;
+    color: #27ae60;
+    font-weight: bold;
+}
+
+.saas-metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    margin-bottom: 30px;
+}
+
+.saas-metric-card {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.saas-metric-value {
+    font-size: 2em;
+    font-weight: bold;
+    color: #667eea;
+    margin-bottom: 5px;
+}
+
+.saas-metric-label {
+    color: #7f8c8d;
+    font-size: 0.9em;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .saas-instance-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+    
+    .saas-instance-details {
+        grid-template-columns: 1fr;
+    }
+    
+    .saas-instance-actions {
+        justify-content: center;
+    }
+    
+    .saas-metrics-grid {
+        grid-template-columns: 1fr;
+    }
+} 

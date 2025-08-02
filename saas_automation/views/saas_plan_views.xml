@@ -5,6 +5,7 @@
         <record id="saas_plan_view_list" model="ir.ui.view">
             <field name="name">saas.plan.view.list</field>
             <field name="model">saas.plan</field>
+            <field name="type">list</field>
             <field name="arch" type="xml">
                 <list>
                     <field name="sequence" widget="handle"/>

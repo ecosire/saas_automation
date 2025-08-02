@@ -5,6 +5,7 @@
         <record id="saas_instance_view_list" model="ir.ui.view">
             <field name="name">saas.instance.view.list</field>
             <field name="model">saas.instance</field>
+            <field name="type">list</field>
             <field name="arch" type="xml">
                 <list>
                     <field name="name"/>

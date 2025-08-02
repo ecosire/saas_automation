@@ -2,7 +2,7 @@
 
 ## Overview
 
-SaaS Automation is a comprehensive Odoo 18 module that provides enterprise-grade SaaS platform management capabilities. It enables businesses to automate the entire lifecycle of SaaS instance management, from creation to billing and analytics.
+SaaS Automation is a comprehensive Odoo 18 module that provides enterprise-grade SaaS platform management capabilities. It enables businesses to automate the entire lifecycle of SaaS instance management, from creation to billing and analytics, using Docker containers for optimal performance and scalability.
 
 **Developed by:** ECOSIRE (PRIVATE) LIMITED  
 **Contact:** info@ecosire.com  
@@ -12,7 +12,7 @@ SaaS Automation is a comprehensive Odoo 18 module that provides enterprise-grade
 
 ### Core SaaS Management
 - ✅ **Multi-tenant Instance Management**
-  - Automated instance creation and deployment
+  - Automated instance creation and deployment using Docker
   - Docker container management with SSH support
   - Multi-server deployment capabilities
   - Instance lifecycle management (deploy, suspend, resume, cancel)
@@ -24,8 +24,9 @@ SaaS Automation is a comprehensive Odoo 18 module that provides enterprise-grade
 
 - ✅ **Backup & Restore System**
   - Automated database backup creation
-  - Database restoration capabilities
-  - Backup file management and storage
+  - Container data backup and restoration
+  - Comprehensive backup management with compression
+  - Backup manifest and versioning
 
 ### Advanced Billing & Subscription
 - ✅ **Subscription Management**
@@ -45,15 +46,16 @@ SaaS Automation is a comprehensive Odoo 18 module that provides enterprise-grade
 
 ### Multi-Server Infrastructure
 - ✅ **Server Management**
-  - Multiple server types support (Docker, Kubernetes, VM, Bare Metal)
+  - Docker-based server deployment
   - SSH-based remote server management
   - Server capacity and load balancing
-  - Server health monitoring
+  - Server health monitoring and connection testing
 
 - ✅ **Docker Integration**
   - Automated container creation and management
   - Multi-version Odoo support (16.0, 17.0, 18.0)
   - Container lifecycle automation
+  - Volume management for data persistence
 
 ### User Interface & Experience
 - ✅ **Modern Dashboard**
@@ -86,8 +88,8 @@ SaaS Automation is a comprehensive Odoo 18 module that provides enterprise-grade
   - Custom domain configuration
 
 - ✅ **Wizard System**
-  - Instance creation wizard
-  - Backup and restore wizard
+  - Instance creation wizard with validation
+  - Backup and restore wizard with progress tracking
   - Guided setup processes
 
 ### Security & Access Control
@@ -98,7 +100,7 @@ SaaS Automation is a comprehensive Odoo 18 module that provides enterprise-grade
 
 - ✅ **Data Protection**
   - Encrypted password storage
-  - Secure SSH connections
+  - Secure SSH connections with key support
   - Audit trail implementation
 
 ### Reporting & Analytics
@@ -121,7 +123,6 @@ The following Python packages are required and will be automatically installed:
 ```bash
 paramiko>=2.8.0          # SSH client for remote server management
 docker>=6.0.0            # Docker API client
-kubernetes>=26.0.0       # Kubernetes API client
 requests>=2.28.0         # HTTP library for API calls
 cryptography>=3.4.0      # Encryption and security
 psycopg2-binary>=2.9.0   # PostgreSQL adapter
@@ -158,7 +159,7 @@ cp -r saas_automation /path/to/odoo/addons/
 ### 2. Dependencies Installation
 ```bash
 # Install Python dependencies
-pip install paramiko docker kubernetes requests cryptography psycopg2-binary redis celery
+pip install paramiko docker requests cryptography psycopg2-binary redis celery
 ```
 
 ### 3. Server Configuration
@@ -182,7 +183,8 @@ sudo apt-get install nginx
 1. **Configure Servers**
    - Go to SaaS Management > Configuration > Servers
    - Add your server details (host, SSH credentials, type)
-   - Test the connection
+   - Test the connection using the "Test Connection" button
+   - Verify server information is displayed
 
 2. **Create Subscription Plans**
    - Go to SaaS Management > Configuration > Plans
@@ -198,7 +200,8 @@ sudo apt-get install nginx
 
 1. **Creating Instances**
    - Use the "Create Instance" wizard
-   - Select customer, plan, and subdomain
+   - Select customer, plan, server, and subdomain
+   - Choose Odoo version (16.0, 17.0, or 18.0)
    - The system will automatically deploy the instance
 
 2. **Managing Subscriptions**
@@ -208,6 +211,7 @@ sudo apt-get install nginx
 
 3. **Backup Management**
    - Use the backup/restore wizard for data protection
+   - Choose backup type (database, container, or full)
    - Schedule regular backups
    - Test restore procedures
 
@@ -249,11 +253,13 @@ The module automatically generates Nginx configurations for custom domains. Ensu
    - Verify SSH credentials in server configuration
    - Check network connectivity
    - Ensure SSH keys are properly configured
+   - Test connection using the "Test Connection" button
 
 2. **Docker Container Creation Failed**
    - Verify Docker is running on the target server
    - Check Docker API access
    - Ensure sufficient disk space
+   - Check Docker daemon logs
 
 3. **Nginx Configuration Issues**
    - Check Nginx syntax: `nginx -t`
@@ -339,7 +345,7 @@ We welcome contributions to improve the SaaS Automation module. Please:
 ## 📝 Changelog
 
 ### Version 18.0.1.0.0
-- Initial release
+- Initial release with Docker-only implementation
 - Complete SaaS management functionality
 - Multi-server deployment support
 - Automated billing and invoicing
@@ -347,7 +353,10 @@ We welcome contributions to improve the SaaS Automation module. Please:
 - Backup and restore capabilities
 - Custom domain management
 - Comprehensive reporting system
+- Enhanced error handling and logging
+- SSH key authentication support
+- Progress tracking in wizards
 
 ---
 
-**Note:** This module is designed for production use but should be thoroughly tested in a staging environment before deployment to production. 
+**Note:** This module is designed for production use but should be thoroughly tested in a staging environment before deployment to production. The Docker-only approach provides excellent performance and scalability for most SaaS deployments. 

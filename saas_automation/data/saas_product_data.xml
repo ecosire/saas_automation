@@ -7,7 +7,7 @@
             <field name="list_price">19.99</field>
             <field name="type">service</field>
             <field name="invoice_policy">order</field>
-            <field name="saas_plan_id" ref="saas_automation.saas_plan_basic"/>
+            <field name="saas_plan_id" ref="saas_plan_basic"/>
         </record>
 
         <record id="saas_product_standard" model="product.template">
@@ -15,7 +15,7 @@
             <field name="list_price">49.99</field>
             <field name="type">service</field>
             <field name="invoice_policy">order</field>
-            <field name="saas_plan_id" ref="saas_automation.saas_plan_standard"/>
+            <field name="saas_plan_id" ref="saas_plan_standard"/>
         </record>
 
         <record id="saas_product_premium" model="product.template">
@@ -23,7 +23,7 @@
             <field name="list_price">99.99</field>
             <field name="type">service</field>
             <field name="invoice_policy">order</field>
-            <field name="saas_plan_id" ref="saas_automation.saas_plan_premium"/>
+            <field name="saas_plan_id" ref="saas_plan_premium"/>
         </record>
     </data>
 </odoo> 

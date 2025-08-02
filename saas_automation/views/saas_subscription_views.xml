@@ -5,6 +5,7 @@
         <record id="saas_subscription_view_list" model="ir.ui.view">
             <field name="name">saas.subscription.view.list</field>
             <field name="model">saas.subscription</field>
+            <field name="type">list</field>
             <field name="arch" type="xml">
                 <list>
                     <field name="name"/>

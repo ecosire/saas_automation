@@ -1,1 +1,116 @@
-/* Static CSS file for SaaS Dashboard */ 
+/* SaaS Dashboard Styles */
+
+.o_kanban_dashboard .oe_kanban_global_click {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+}
+
+.o_kanban_dashboard .oe_kanban_global_click:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.o_kanban_dashboard .o_kanban_card_header_title {
+    padding: 15px 15px 10px 15px;
+}
+
+.o_kanban_dashboard .o_kanban_card_content {
+    padding: 0 15px 15px 15px;
+}
+
+.o_kanban_dashboard .o_kanban_card_content .row {
+    margin-bottom: 10px;
+}
+
+.o_kanban_dashboard .o_kanban_card_content .col-6 {
+    padding: 5px;
+}
+
+.o_kanban_dashboard strong {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.9em;
+}
+
+/* SaaS Instance Status Colors */
+.saas-status-draft {
+    color: #6c757d;
+}
+
+.saas-status-deploying {
+    color: #ffc107;
+}
+
+.saas-status-running {
+    color: #28a745;
+}
+
+.saas-status-suspended {
+    color: #dc3545;
+}
+
+.saas-status-cancelled {
+    color: #6c757d;
+}
+
+/* Server Connection Status */
+.server-status-connected {
+    color: #28a745;
+}
+
+.server-status-failed {
+    color: #dc3545;
+}
+
+.server-status-unknown {
+    color: #6c757d;
+}
+
+/* Progress Bar Styles */
+.saas-progress {
+    background-color: #e9ecef;
+    border-radius: 4px;
+    height: 20px;
+    overflow: hidden;
+}
+
+.saas-progress-bar {
+    background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+    height: 100%;
+    transition: width 0.3s ease;
+}
+
+/* Dashboard Cards */
+.saas-metric-card {
+    background: white;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+}
+
+.saas-metric-card h3 {
+    margin: 0 0 10px 0;
+    color: #495057;
+    font-size: 1.1em;
+}
+
+.saas-metric-value {
+    font-size: 2em;
+    font-weight: bold;
+    color: #667eea;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .o_kanban_dashboard .o_kanban_card_content .col-6 {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    
+    .saas-metric-value {
+        font-size: 1.5em;
+    }
+} 

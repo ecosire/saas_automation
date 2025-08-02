@@ -1,19 +1,158 @@
 /* SaaS Pricing Page Styles */
-.pricing-card-title {
-    font-size: 3rem;
-    font-weight: 300;
+
+.saas-pricing-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
 }
 
-.card-header {
-    background-color: #f8f9fa;
-    border-bottom: 1px solid #dee2e6;
+.saas-pricing-header {
+    text-align: center;
+    margin-bottom: 60px;
 }
 
-.card {
-    transition: transform .2s;
+.saas-pricing-header h1 {
+    font-size: 3em;
+    color: #2c3e50;
+    margin-bottom: 20px;
 }
 
-.card:hover {
+.saas-pricing-header p {
+    font-size: 1.2em;
+    color: #7f8c8d;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.saas-pricing-plans {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.saas-pricing-plan {
+    background: white;
+    border-radius: 12px;
+    padding: 40px 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    min-width: 300px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+}
+
+.saas-pricing-plan:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.saas-pricing-plan.featured {
+    border: 3px solid #667eea;
     transform: scale(1.05);
-    box-shadow: 0 1rem 3rem rgba(0,0,0,.175)!important;
+}
+
+.saas-pricing-plan.featured::before {
+    content: "Most Popular";
+    position: absolute;
+    top: -15px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #667eea;
+    color: white;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 0.9em;
+    font-weight: bold;
+}
+
+.saas-plan-name {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+
+.saas-plan-price {
+    font-size: 3em;
+    font-weight: bold;
+    color: #667eea;
+    margin-bottom: 10px;
+}
+
+.saas-plan-price .currency {
+    font-size: 0.5em;
+    vertical-align: top;
+}
+
+.saas-plan-price .period {
+    font-size: 0.3em;
+    color: #7f8c8d;
+    font-weight: normal;
+}
+
+.saas-plan-features {
+    list-style: none;
+    padding: 0;
+    margin: 30px 0;
+}
+
+.saas-plan-features li {
+    padding: 10px 0;
+    border-bottom: 1px solid #ecf0f1;
+    color: #2c3e50;
+}
+
+.saas-plan-features li:last-child {
+    border-bottom: none;
+}
+
+.saas-plan-features li::before {
+    content: "✓";
+    color: #27ae60;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.saas-plan-button {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: 15px 40px;
+    border-radius: 25px;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    width: 100%;
+}
+
+.saas-plan-button:hover {
+    transform: scale(1.05);
+}
+
+.saas-plan-button.secondary {
+    background: #ecf0f1;
+    color: #2c3e50;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .saas-pricing-plans {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .saas-pricing-plan {
+        min-width: 280px;
+        margin-bottom: 30px;
+    }
+    
+    .saas-pricing-plan.featured {
+        transform: none;
+    }
+    
+    .saas-pricing-header h1 {
+        font-size: 2em;
+    }
 } 

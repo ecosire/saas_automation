@@ -1,12 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-        <!-- Main SaaS Menu -->
-        <menuitem id="saas_menu_root"
-                  name="SaaS Management"
-                  sequence="10"
-                  web_icon="saas_automation,static/description/icon.png"/>
-
         <!-- Dashboard Menu -->
         <menuitem id="saas_menu_dashboard"
                   name="Dashboard"
@@ -27,12 +21,6 @@
                   parent="saas_menu_root"
                   action="saas_subscription_action"
                   sequence="3"/>
-
-        <!-- Configuration Menu -->
-        <menuitem id="saas_menu_config"
-                  name="Configuration"
-                  parent="saas_menu_root"
-                  sequence="100"/>
                   
         <menuitem id="saas_menu_servers"
                   name="Servers"
