@@ -1,46 +1,181 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
+        
+        <!-- Modern SaaS Dashboard Kanban View -->
         <record id="saas_dashboard_view_kanban" model="ir.ui.view">
             <field name="name">saas.dashboard.kanban</field>
             <field name="model">saas.dashboard</field>
             <field name="type">kanban</field>
             <field name="arch" type="xml">
-                <kanban class="o_kanban_dashboard">
+                <kanban class="o_kanban_dashboard o_saas_dashboard" create="false">
                     <field name="name"/>
                     <field name="total_instances"/>
                     <field name="active_instances"/>
+                    <field name="suspended_instances"/>
+                    <field name="total_users"/>
                     <field name="active_users"/>
                     <field name="mrr"/>
+                    <field name="arr"/>
+                    <field name="churn_rate"/>
+                    <field name="server_utilization"/>
+                    <field name="revenue_growth"/>
+                    <field name="customer_satisfaction"/>
                     <templates>
                         <t t-name="kanban-box">
-                            <div class="oe_kanban_global_click">
-                                <div class="o_kanban_card_header">
-                                    <div class="o_kanban_card_header_title">
-                                        <div class="o_primary">
-                                            <span><t t-esc="record.name.value"/></span>
+                            <div class="oe_kanban_global_click o_saas_dashboard_card">
+                                <!-- Header Section -->
+                                <div class="o_saas_dashboard_header">
+                                    <div class="o_saas_dashboard_title">
+                                        <h3 class="mb-0">
+                                            <i class="fa fa-tachometer me-2"></i>
+                                            <t t-esc="record.name.value"/>
+                                        </h3>
+                                    </div>
+                                    <div class="o_saas_dashboard_status">
+                                        <span class="badge bg-success">Live</span>
+                                    </div>
+                                </div>
+
+                                <!-- Key Metrics Grid -->
+                                <div class="o_saas_dashboard_metrics">
+                                    <div class="row g-3">
+                                        <!-- Instances Card -->
+                                        <div class="col-6">
+                                            <div class="o_metric_card o_metric_instances">
+                                                <div class="o_metric_icon">
+                                                    <i class="fa fa-server"></i>
+                                                </div>
+                                                <div class="o_metric_content">
+                                                    <div class="o_metric_value">
+                                                        <t t-esc="record.total_instances.value"/>
+                                                    </div>
+                                                    <div class="o_metric_label">Total Instances</div>
+                                                    <div class="o_metric_subtitle">
+                                                        <span class="text-success">
+                                                            <i class="fa fa-arrow-up"></i>
+                                                            <t t-esc="record.active_instances.value"/> Active
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Users Card -->
+                                        <div class="col-6">
+                                            <div class="o_metric_card o_metric_users">
+                                                <div class="o_metric_icon">
+                                                    <i class="fa fa-users"></i>
+                                                </div>
+                                                <div class="o_metric_content">
+                                                    <div class="o_metric_value">
+                                                        <t t-esc="record.total_users.value"/>
+                                                    </div>
+                                                    <div class="o_metric_label">Total Users</div>
+                                                    <div class="o_metric_subtitle">
+                                                        <span class="text-info">
+                                                            <i class="fa fa-user"></i>
+                                                            <t t-esc="record.active_users.value"/> Active
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Revenue Card -->
+                                        <div class="col-6">
+                                            <div class="o_metric_card o_metric_revenue">
+                                                <div class="o_metric_icon">
+                                                    <i class="fa fa-dollar-sign"></i>
+                                                </div>
+                                                <div class="o_metric_content">
+                                                    <div class="o_metric_value">
+                                                        $<t t-esc="record.mrr.value"/>
+                                                    </div>
+                                                    <div class="o_metric_label">Monthly Revenue</div>
+                                                    <div class="o_metric_subtitle">
+                                                        <span class="text-success">
+                                                            <i class="fa fa-arrow-up"></i>
+                                                            <t t-esc="record.revenue_growth.value"/>% Growth
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Performance Card -->
+                                        <div class="col-6">
+                                            <div class="o_metric_card o_metric_performance">
+                                                <div class="o_metric_icon">
+                                                    <i class="fa fa-chart-line"></i>
+                                                </div>
+                                                <div class="o_metric_content">
+                                                    <div class="o_metric_value">
+                                                        <t t-esc="record.server_utilization.value"/>%
+                                                    </div>
+                                                    <div class="o_metric_label">Server Utilization</div>
+                                                    <div class="o_metric_subtitle">
+                                                        <span class="text-warning">
+                                                            <i class="fa fa-exclamation-triangle"></i>
+                                                            <t t-esc="record.suspended_instances.value"/> Suspended
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="o_kanban_card_content">
-                                    <div class="row">
-                                        <div class="col-6">
-                                            <strong>Total Instances:</strong>
-                                            <t t-esc="record.total_instances.value"/>
+
+                                <!-- Quick Actions -->
+                                <div class="o_saas_dashboard_actions">
+                                    <div class="row g-2">
+                                        <div class="col-4">
+                                            <button class="btn btn-outline-primary btn-sm w-100" 
+                                                    data-action="create_instance">
+                                                <i class="fa fa-plus"></i> New Instance
+                                            </button>
                                         </div>
-                                        <div class="col-6">
-                                            <strong>Active Instances:</strong>
-                                            <t t-esc="record.active_instances.value"/>
+                                        <div class="col-4">
+                                            <button class="btn btn-outline-success btn-sm w-100" 
+                                                    data-action="view_analytics">
+                                                <i class="fa fa-chart-bar"></i> Analytics
+                                            </button>
+                                        </div>
+                                        <div class="col-4">
+                                            <button class="btn btn-outline-info btn-sm w-100" 
+                                                    data-action="view_reports">
+                                                <i class="fa fa-file-alt"></i> Reports
+                                            </button>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-6">
-                                            <strong>Active Users:</strong>
-                                            <t t-esc="record.active_users.value"/>
+                                </div>
+
+                                <!-- Status Indicators -->
+                                <div class="o_saas_dashboard_status_indicators">
+                                    <div class="row g-2">
+                                        <div class="col-3">
+                                            <div class="o_status_indicator o_status_healthy">
+                                                <div class="o_status_dot"></div>
+                                                <small>Healthy</small>
+                                            </div>
                                         </div>
-                                        <div class="col-6">
-                                            <strong>MRR:</strong>
-                                            <t t-esc="record.mrr.value"/>
+                                        <div class="col-3">
+                                            <div class="o_status_indicator o_status_warning">
+                                                <div class="o_status_dot"></div>
+                                                <small>Warning</small>
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="o_status_indicator o_status_critical">
+                                                <div class="o_status_dot"></div>
+                                                <small>Critical</small>
+                                            </div>
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="o_status_indicator o_status_offline">
+                                                <div class="o_status_dot"></div>
+                                                <small>Offline</small>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -50,36 +185,224 @@
                 </kanban>
             </field>
         </record>
+
+        <!-- Enhanced SaaS Dashboard Form View -->
+        <record id="saas_dashboard_view_form" model="ir.ui.view">
+            <field name="name">saas.dashboard.form</field>
+            <field name="model">saas.dashboard</field>
+            <field name="arch" type="xml">
+                <form class="o_saas_dashboard_form">
+                    <header>
+                        <div class="o_saas_dashboard_header_form">
+                            <h2 class="o_saas_dashboard_title_form">
+                                <i class="fa fa-tachometer me-3"></i>
+                                SaaS Platform Dashboard
+                            </h2>
+                            <div class="o_saas_dashboard_actions_form">
+                                <button name="action_refresh_dashboard" type="object" 
+                                        class="btn btn-outline-primary">
+                                    <i class="fa fa-refresh"></i> Refresh
+                                </button>
+                                <button name="action_export_data" type="object" 
+                                        class="btn btn-outline-success">
+                                    <i class="fa fa-download"></i> Export
+                                </button>
+                            </div>
+                        </div>
+                    </header>
+                    
+                    <sheet>
+                        <!-- Overview Section -->
+                        <div class="o_saas_dashboard_section">
+                            <h3 class="o_saas_dashboard_section_title">
+                                <i class="fa fa-chart-pie me-2"></i>Platform Overview
+                            </h3>
+                            <div class="row g-4">
+                                <div class="col-md-3">
+                                    <div class="o_dashboard_stat_card">
+                                        <div class="o_stat_icon o_stat_instances">
+                                            <i class="fa fa-server"></i>
+                                        </div>
+                                        <div class="o_stat_content">
+                                            <div class="o_stat_value">
+                                                <field name="total_instances" readonly="1"/>
+                                            </div>
+                                            <div class="o_stat_label">Total Instances</div>
+                                            <div class="o_stat_trend text-success">
+                                                <i class="fa fa-arrow-up"></i> +12% this month
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-3">
+                                    <div class="o_dashboard_stat_card">
+                                        <div class="o_stat_icon o_stat_users">
+                                            <i class="fa fa-users"></i>
+                                        </div>
+                                        <div class="o_stat_content">
+                                            <div class="o_stat_value">
+                                                <field name="total_users" readonly="1"/>
+                                            </div>
+                                            <div class="o_stat_label">Total Users</div>
+                                            <div class="o_stat_trend text-info">
+                                                <i class="fa fa-arrow-up"></i> +8% this month
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-3">
+                                    <div class="o_dashboard_stat_card">
+                                        <div class="o_stat_icon o_stat_revenue">
+                                            <i class="fa fa-dollar-sign"></i>
+                                        </div>
+                                        <div class="o_stat_content">
+                                            <div class="o_stat_value">
+                                                $<field name="mrr" readonly="1"/>
+                                            </div>
+                                            <div class="o_stat_label">Monthly Revenue</div>
+                                            <div class="o_stat_trend text-success">
+                                                <i class="fa fa-arrow-up"></i> +15% this month
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-3">
+                                    <div class="o_dashboard_stat_card">
+                                        <div class="o_stat_icon o_stat_performance">
+                                            <i class="fa fa-chart-line"></i>
+                                        </div>
+                                        <div class="o_stat_content">
+                                            <div class="o_stat_value">
+                                                <field name="server_utilization" readonly="1"/>%
+                                            </div>
+                                            <div class="o_stat_label">Server Utilization</div>
+                                            <div class="o_stat_trend text-warning">
+                                                <i class="fa fa-exclamation-triangle"></i> High load
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Detailed Metrics -->
+                        <div class="o_saas_dashboard_section">
+                            <h3 class="o_saas_dashboard_section_title">
+                                <i class="fa fa-chart-bar me-2"></i>Detailed Metrics
+                            </h3>
+                            <div class="row g-4">
+                                <div class="col-md-6">
+                                    <div class="o_dashboard_detail_card">
+                                        <h4>Instance Status</h4>
+                                        <div class="o_metric_row">
+                                            <span>Active Instances:</span>
+                                            <span class="o_metric_value">
+                                                <field name="active_instances" readonly="1"/>
+                                            </span>
+                                        </div>
+                                        <div class="o_metric_row">
+                                            <span>Suspended Instances:</span>
+                                            <span class="o_metric_value">
+                                                <field name="suspended_instances" readonly="1"/>
+                                            </span>
+                                        </div>
+                                        <div class="o_metric_row">
+                                            <span>Active Users:</span>
+                                            <span class="o_metric_value">
+                                                <field name="active_users" readonly="1"/>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="col-md-6">
+                                    <div class="o_dashboard_detail_card">
+                                        <h4>Financial Metrics</h4>
+                                        <div class="o_metric_row">
+                                            <span>Annual Revenue:</span>
+                                            <span class="o_metric_value">
+                                                $<field name="arr" readonly="1"/>
+                                            </span>
+                                        </div>
+                                        <div class="o_metric_row">
+                                            <span>Churn Rate:</span>
+                                            <span class="o_metric_value">
+                                                <field name="churn_rate" readonly="1"/>%
+                                            </span>
+                                        </div>
+                                        <div class="o_metric_row">
+                                            <span>Customer Satisfaction:</span>
+                                            <span class="o_metric_value">
+                                                <field name="customer_satisfaction" readonly="1"/>%
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Configuration -->
+                        <div class="o_saas_dashboard_section">
+                            <h3 class="o_saas_dashboard_section_title">
+                                <i class="fa fa-cog me-2"></i>Dashboard Configuration
+                            </h3>
+                            <group>
+                                <group string="Basic Information">
+                                    <field name="name" placeholder="Dashboard Name"/>
+                                </group>
+                                <group string="Display Options">
+                                    <field name="auto_refresh" widget="boolean_toggle"/>
+                                    <field name="show_charts" widget="boolean_toggle"/>
+                                    <field name="show_alerts" widget="boolean_toggle"/>
+                                </group>
+                            </group>
+                        </div>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!-- Dashboard Action -->
         <record id="saas_dashboard_action" model="ir.actions.act_window">
             <field name="name">SaaS Dashboard</field>
             <field name="res_model">saas.dashboard</field>
             <field name="view_mode">kanban,form</field>
             <field name="view_id" ref="saas_dashboard_view_kanban"/>
             <field name="help" type="html">
-                <p class="o_view_nocontent_smiling_face">
-                    Welcome to your SaaS Dashboard!
-                </p>
+                <div class="o_saas_dashboard_help">
+                    <div class="o_help_icon">
+                        <i class="fa fa-rocket"></i>
+                    </div>
+                    <h3>Welcome to Your SaaS Dashboard!</h3>
+                    <p>Monitor your SaaS platform performance, track key metrics, and manage your instances from this comprehensive dashboard.</p>
+                    <div class="o_help_features">
+                        <div class="o_help_feature">
+                            <i class="fa fa-server"></i>
+                            <span>Instance Management</span>
+                        </div>
+                        <div class="o_help_feature">
+                            <i class="fa fa-chart-line"></i>
+                            <span>Performance Analytics</span>
+                        </div>
+                        <div class="o_help_feature">
+                            <i class="fa fa-dollar-sign"></i>
+                            <span>Revenue Tracking</span>
+                        </div>
+                    </div>
+                </div>
             </field>
         </record>
-        <record id="saas_dashboard_view_form" model="ir.ui.view">
-            <field name="name">saas.dashboard.form</field>
-            <field name="model">saas.dashboard</field>
-            <field name="arch" type="xml">
-                <form>
-                    <sheet>
-                        <group>
-                            <field name="name"/>
-                            <field name="total_instances"/>
-                            <field name="active_instances"/>
-                            <field name="active_users"/>
-                            <field name="mrr"/>
-                        </group>
-                    </sheet>
-                </form>
-            </field>
-        </record>
+
+        <!-- Dashboard Data -->
         <record id="saas_dashboard_data" model="saas.dashboard">
-            <field name="name">SaaS Overview</field>
+            <field name="name">SaaS Platform Overview</field>
+            <field name="auto_refresh" eval="True"/>
+            <field name="show_charts" eval="True"/>
+            <field name="show_alerts" eval="True"/>
         </record>
+
     </data>
 </odoo> 

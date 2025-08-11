@@ -1,4 +1,286 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    
+    <data>
+        
+        <!-- SaaS Analytics Report Template -->
+        <template id="report_saas_analytics">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="saas_automation.report_saas_analytics_document"/>
+                </t>
+            </t>
+        </template>
+
+        <!-- SaaS Analytics Report Document -->
+        <template id="report_saas_analytics_document">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <!-- Report Header -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="text-center">
+                                <h1 class="text-primary">
+                                    <i class="fa fa-chart-line me-3"></i>
+                                    SaaS Analytics Report
+                                </h1>
+                                <p class="text-muted">
+                                    Generated on <t t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M:%S')"/>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Report Summary -->
+                    <div class="row mt-4">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header bg-primary text-white">
+                                    <h3 class="card-title mb-0">
+                                        <i class="fa fa-chart-pie me-2"></i>
+                                        Executive Summary
+                                    </h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="text-center">
+                                                <h4 class="text-success">$<t t-esc="format_amount(data.get('total_revenue', 0))"/></h4>
+                                                <p class="text-muted">Total Revenue</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="text-center">
+                                                <h4 class="text-info"><t t-esc="data.get('total_instances', 0)"/></h4>
+                                                <p class="text-muted">Total Instances</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="text-center">
+                                                <h4 class="text-warning"><t t-esc="data.get('total_users', 0)"/></h4>
+                                                <p class="text-muted">Total Users</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="text-center">
+                                                <h4 class="text-danger"><t t-esc="format_percentage(data.get('churn_rate', 0))"/>%</h4>
+                                                <p class="text-muted">Churn Rate</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Revenue Analysis -->
+                    <div class="row mt-4">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header bg-success text-white">
+                                    <h3 class="card-title mb-0">
+                                        <i class="fa fa-dollar-sign me-2"></i>
+                                        Revenue Analysis
+                                    </h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <h5>Revenue by Plan</h5>
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Plan</th>
+                                                        <th>Count</th>
+                                                        <th>Revenue</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <t t-foreach="data.get('revenue_by_plan', {}).items()" t-as="plan_data">
+                                                        <tr>
+                                                            <td><t t-esc="plan_data[0]"/></td>
+                                                            <td><t t-esc="plan_data[1]['count']"/></td>
+                                                            <td>$<t t-esc="format_amount(plan_data[1]['revenue'])"/></td>
+                                                        </tr>
+                                                    </t>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h5>Revenue Trend</h5>
+                                            <div class="chart-container">
+                                                <canvas id="revenueChart" width="400" height="200"></canvas>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Usage Analysis -->
+                    <div class="row mt-4">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header bg-info text-white">
+                                    <h3 class="card-title mb-0">
+                                        <i class="fa fa-server me-2"></i>
+                                        Usage Analysis
+                                    </h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <h5>Usage by Server</h5>
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Server</th>
+                                                        <th>Instances</th>
+                                                        <th>Users</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <t t-foreach="data.get('usage_by_server', {}).items()" t-as="server_data">
+                                                        <tr>
+                                                            <td><t t-esc="server_data[0]"/></td>
+                                                            <td><t t-esc="server_data[1]['count']"/></td>
+                                                            <td><t t-esc="server_data[1]['users']"/></td>
+                                                        </tr>
+                                                    </t>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h5>Usage Trend</h5>
+                                            <div class="chart-container">
+                                                <canvas id="usageChart" width="400" height="200"></canvas>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Performance Analysis -->
+                    <div class="row mt-4">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header bg-warning text-dark">
+                                    <h3 class="card-title mb-0">
+                                        <i class="fa fa-tachometer-alt me-2"></i>
+                                        Performance Analysis
+                                    </h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <h5>Server Performance</h5>
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Server</th>
+                                                        <th>Utilization</th>
+                                                        <th>Status</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <t t-foreach="data.get('performance_by_server', [])" t-as="server">
+                                                        <tr>
+                                                            <td><t t-esc="server['name']"/></td>
+                                                            <td>
+                                                                <div class="progress">
+                                                                    <div class="progress-bar" role="progressbar" 
+                                                                         t-attf-style="width: #{server['utilization']}%">
+                                                                        <t t-esc="server['utilization']"/>%
+                                                                    </div>
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <span t-attf-class="badge #{server['status'] == 'connected' ? 'bg-success' : 'bg-danger'}">
+                                                                    <t t-esc="server['status']"/>
+                                                                </span>
+                                                            </td>
+                                                        </tr>
+                                                    </t>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h5>Uptime Statistics</h5>
+                                            <div class="row">
+                                                <div class="col-6">
+                                                    <div class="text-center">
+                                                        <h3 class="text-success"><t t-esc="data.get('uptime_data', {}).get('uptime_percentage', 0)"/>%</h3>
+                                                        <p class="text-muted">Uptime</p>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="text-center">
+                                                        <h3 class="text-warning"><t t-esc="data.get('uptime_data', {}).get('downtime_hours', 0)"/>h</h3>
+                                                        <p class="text-muted">Downtime</p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Customer Analysis -->
+                    <div class="row mt-4">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header bg-secondary text-white">
+                                    <h3 class="card-title mb-0">
+                                        <i class="fa fa-users me-2"></i>
+                                        Customer Analysis
+                                    </h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="text-center">
+                                                <h3 class="text-primary"><t t-esc="data.get('total_customers', 0)"/></h3>
+                                                <p class="text-muted">Total Customers</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="text-center">
+                                                <h3 class="text-success"><t t-esc="data.get('new_customers', 0)"/></h3>
+                                                <p class="text-muted">New Customers</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="text-center">
+                                                <h3 class="text-info"><t t-esc="format_percentage(data.get('customer_satisfaction', 0))"/>%</h3>
+                                                <p class="text-muted">Satisfaction</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Report Footer -->
+                    <div class="row mt-4">
+                        <div class="col-12">
+                            <div class="text-center">
+                                <p class="text-muted">
+                                    <small>
+                                        Report generated by ECOSIRE SaaS Automation Platform<br/>
+                                        For more information, contact info@ecosire.com
+                                    </small>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </template>
+
+    </data>
 </odoo> 

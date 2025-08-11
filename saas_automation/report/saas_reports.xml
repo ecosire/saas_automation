@@ -1,4 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    
+    <data noupdate="1">
+        
+        <!-- SaaS Subscription Report -->
+        <record id="action_saas_subscription_report" model="ir.actions.report">
+            <field name="name">SaaS Subscription Report</field>
+            <field name="model">saas.subscription</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">saas_automation.report_saas_subscription</field>
+            <field name="report_file">saas_automation.report_saas_subscription</field>
+            <field name="print_report_name">'SaaS Subscription - %s' % (object.name)</field>
+            <field name="binding_model_id" ref="saas_automation.model_saas_subscription"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <!-- SaaS Instance Report -->
+        <record id="action_saas_instance_report" model="ir.actions.report">
+            <field name="name">SaaS Instance Report</field>
+            <field name="model">saas.instance</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">saas_automation.report_saas_instance</field>
+            <field name="report_file">saas_automation.report_saas_instance</field>
+            <field name="print_report_name">'SaaS Instance - %s' % (object.name)</field>
+            <field name="binding_model_id" ref="saas_automation.model_saas_instance"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <!-- SaaS Server Report -->
+        <record id="action_saas_server_report" model="ir.actions.report">
+            <field name="name">SaaS Server Report</field>
+            <field name="model">saas.server</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">saas_automation.report_saas_server</field>
+            <field name="report_file">saas_automation.report_saas_server</field>
+            <field name="print_report_name">'SaaS Server - %s' % (object.name)</field>
+            <field name="binding_model_id" ref="saas_automation.model_saas_server"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <!-- SaaS Analytics Report -->
+        <record id="action_saas_analytics_report" model="ir.actions.report">
+            <field name="name">SaaS Analytics Report</field>
+            <field name="model">saas.analytics</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">saas_automation.report_saas_analytics</field>
+            <field name="report_file">saas_automation.report_saas_analytics</field>
+            <field name="print_report_name">'SaaS Analytics Report'</field>
+            <field name="binding_model_id" ref="saas_automation.model_saas_analytics"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <!-- SaaS Billing Report -->
+        <record id="action_saas_billing_report" model="ir.actions.report">
+            <field name="name">SaaS Billing Report</field>
+            <field name="model">saas.billing</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">saas_automation.report_saas_billing</field>
+            <field name="report_file">saas_automation.report_saas_billing</field>
+            <field name="print_report_name">'SaaS Billing Report'</field>
+            <field name="binding_model_id" ref="saas_automation.model_saas_billing"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <!-- SaaS Dashboard Report -->
+        <record id="action_saas_dashboard_report" model="ir.actions.report">
+            <field name="name">SaaS Dashboard Report</field>
+            <field name="model">saas.dashboard</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">saas_automation.report_saas_dashboard</field>
+            <field name="report_file">saas_automation.report_saas_dashboard</field>
+            <field name="print_report_name">'SaaS Dashboard Report'</field>
+            <field name="binding_model_id" ref="saas_automation.model_saas_dashboard"/>
+            <field name="binding_type">report</field>
+        </record>
+
+        <!-- Report Paper Format -->
+        <record id="paperformat_saas_report" model="report.paperformat">
+            <field name="name">SaaS Report Format</field>
+            <field name="default" eval="False"/>
+            <field name="format">A4</field>
+            <field name="page_width">0</field>
+            <field name="page_height">0</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">20</field>
+            <field name="margin_bottom">20</field>
+            <field name="margin_left">20</field>
+            <field name="margin_right">20</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">0</field>
+            <field name="dpi">90</field>
+        </record>
+
+    </data>
 </odoo> 

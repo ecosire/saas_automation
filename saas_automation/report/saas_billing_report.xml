@@ -1,4 +1,278 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    
+    <data>
+        
+        <!-- SaaS Billing Report Template -->
+        <template id="report_saas_billing">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="saas_automation.report_saas_billing_document"/>
+                </t>
+            </t>
+        </template>
+
+        <!-- SaaS Billing Report Document -->
+        <template id="report_saas_billing_document">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <!-- Report Header -->
+                    <div class="row">
+                        <div class="col-12">
+                            <div class="text-center">
+                                <h1 class="text-primary">
+                                    <i class="fa fa-file-invoice-dollar me-3"></i>
+                                    SaaS Billing Report
+                                </h1>
+                                <p class="text-muted">
+                                    Generated on <t t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M:%S')"/>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Billing Summary -->
+                    <div class="row mt-4">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header bg-primary text-white">
+                                    <h3 class="card-title mb-0">
+                                        <i class="fa fa-chart-pie me-2"></i>
+                                        Billing Summary
+                                    </h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <div class="text-center">
+                                                <h4 class="text-success">$<t t-esc="format_amount(data.get('total_billed', 0))"/></h4>
+                                                <p class="text-muted">Total Billed</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="text-center">
+                                                <h4 class="text-info"><t t-esc="data.get('total_invoices', 0)"/></h4>
+                                                <p class="text-muted">Total Invoices</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="text-center">
+                                                <h4 class="text-warning">$<t t-esc="format_amount(data.get('total_paid', 0))"/></h4>
+                                                <p class="text-muted">Total Paid</p>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="text-center">
+                                                <h4 class="text-danger">$<t t-esc="format_amount(data.get('total_outstanding', 0))"/></h4>
+                                                <p class="text-muted">Outstanding</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Invoice Details -->
+                    <div class="row mt-4">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header bg-success text-white">
+                                    <h3 class="card-title mb-0">
+                                        <i class="fa fa-list me-2"></i>
+                                        Invoice Details
+                                    </h3>
+                                </div>
+                                <div class="card-body">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Invoice #</th>
+                                                <th>Customer</th>
+                                                <th>Date</th>
+                                                <th>Due Date</th>
+                                                <th>Amount</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <t t-foreach="data.get('invoices', [])" t-as="invoice">
+                                                <tr>
+                                                    <td><t t-esc="invoice.get('number', '')"/></td>
+                                                    <td><t t-esc="invoice.get('customer', '')"/></td>
+                                                    <td><t t-esc="invoice.get('date', '')"/></td>
+                                                    <td><t t-esc="invoice.get('due_date', '')"/></td>
+                                                    <td>$<t t-esc="format_amount(invoice.get('amount', 0))"/></td>
+                                                    <td>
+                                                        <span t-attf-class="badge #{invoice.get('status') == 'paid' ? 'bg-success' : 'bg-warning'}">
+                                                            <t t-esc="invoice.get('status', '')"/>
+                                                        </span>
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Payment Analysis -->
+                    <div class="row mt-4">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header bg-info text-white">
+                                    <h3 class="card-title mb-0">
+                                        <i class="fa fa-credit-card me-2"></i>
+                                        Payment Analysis
+                                    </h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <h5>Payment Methods</h5>
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Method</th>
+                                                        <th>Count</th>
+                                                        <th>Amount</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <t t-foreach="data.get('payment_methods', {}).items()" t-as="method_data">
+                                                        <tr>
+                                                            <td><t t-esc="method_data[0]"/></td>
+                                                            <td><t t-esc="method_data[1]['count']"/></td>
+                                                            <td>$<t t-esc="format_amount(method_data[1]['amount'])"/></td>
+                                                        </tr>
+                                                    </t>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h5>Payment Status Distribution</h5>
+                                            <div class="chart-container">
+                                                <canvas id="paymentChart" width="400" height="200"></canvas>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Revenue Trends -->
+                    <div class="row mt-4">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header bg-warning text-dark">
+                                    <h3 class="card-title mb-0">
+                                        <i class="fa fa-chart-line me-2"></i>
+                                        Revenue Trends
+                                    </h3>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <h5>Monthly Revenue</h5>
+                                            <table class="table table-striped">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Month</th>
+                                                        <th>Revenue</th>
+                                                        <th>Growth</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <t t-foreach="data.get('monthly_revenue', [])" t-as="month_data">
+                                                        <tr>
+                                                            <td><t t-esc="month_data.get('month', '')"/></td>
+                                                            <td>$<t t-esc="format_amount(month_data.get('revenue', 0))"/></td>
+                                                            <td>
+                                                                <span t-attf-class="text-#{month_data.get('growth', 0) >= 0 ? 'success' : 'danger'}">
+                                                                    <i t-attf-class="fa fa-arrow-#{month_data.get('growth', 0) >= 0 ? 'up' : 'down'}"></i>
+                                                                    <t t-esc="abs(month_data.get('growth', 0))"/>%
+                                                                </span>
+                                                            </td>
+                                                        </tr>
+                                                    </t>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h5>Revenue Chart</h5>
+                                            <div class="chart-container">
+                                                <canvas id="revenueChart" width="400" height="200"></canvas>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Outstanding Invoices -->
+                    <div class="row mt-4">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header bg-danger text-white">
+                                    <h3 class="card-title mb-0">
+                                        <i class="fa fa-exclamation-triangle me-2"></i>
+                                        Outstanding Invoices
+                                    </h3>
+                                </div>
+                                <div class="card-body">
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Invoice #</th>
+                                                <th>Customer</th>
+                                                <th>Due Date</th>
+                                                <th>Days Overdue</th>
+                                                <th>Amount</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <t t-foreach="data.get('outstanding_invoices', [])" t-as="invoice">
+                                                <tr>
+                                                    <td><t t-esc="invoice.get('number', '')"/></td>
+                                                    <td><t t-esc="invoice.get('customer', '')"/></td>
+                                                    <td><t t-esc="invoice.get('due_date', '')"/></td>
+                                                    <td>
+                                                        <span t-attf-class="badge #{invoice.get('days_overdue', 0) > 30 ? 'bg-danger' : 'bg-warning'}">
+                                                            <t t-esc="invoice.get('days_overdue', 0)"/> days
+                                                        </span>
+                                                    </td>
+                                                    <td>$<t t-esc="format_amount(invoice.get('amount', 0))"/></td>
+                                                    <td>
+                                                        <button class="btn btn-sm btn-outline-primary">Send Reminder</button>
+                                                    </td>
+                                                </tr>
+                                            </t>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Report Footer -->
+                    <div class="row mt-4">
+                        <div class="col-12">
+                            <div class="text-center">
+                                <p class="text-muted">
+                                    <small>
+                                        Billing report generated by ECOSIRE SaaS Automation Platform<br/>
+                                        For billing inquiries, contact billing@ecosire.com
+                                    </small>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </template>
+
+    </data>
 </odoo> 

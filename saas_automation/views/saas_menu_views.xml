@@ -33,5 +33,29 @@
                   parent="saas_menu_config"
                   action="saas_plan_action"
                   sequence="2"/>
+                  
+        <!-- Analytics Menu -->
+        <menuitem id="saas_menu_analytics"
+                  name="Analytics"
+                  parent="saas_menu_root"
+                  sequence="4"/>
+                  
+        <!-- Billing Menu -->
+        <menuitem id="saas_menu_billing"
+                  name="Billing"
+                  parent="saas_menu_root"
+                  sequence="5"/>
+                  
+        <!-- Automation Menu -->
+        <menuitem id="saas_menu_automation"
+                  name="Automation"
+                  parent="saas_menu_root"
+                  sequence="6"/>
+                  
+        <!-- Integration Menu -->
+        <menuitem id="saas_menu_integration"
+                  name="Integration"
+                  parent="saas_menu_root"
+                  sequence="7"/>
     </data>
 </odoo> 

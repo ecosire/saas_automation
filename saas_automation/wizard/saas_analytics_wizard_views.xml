@@ -1,4 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    
+    <data>
+        
+        <!-- Analytics Wizard Form View -->
+        <record id="view_saas_analytics_wizard_form" model="ir.ui.view">
+            <field name="name">saas.analytics.wizard.form</field>
+            <field name="model">saas.analytics.wizard</field>
+            <field name="arch" type="xml">
+                <form string="SaaS Analytics Report">
+                    <group>
+                        <group string="Report Configuration">
+                            <field name="report_type"/>
+                            <field name="date_from"/>
+                            <field name="date_to"/>
+                            <field name="group_by"/>
+                        </group>
+                        <group string="Filters">
+                            <field name="partner_ids" widget="many2many_tags"/>
+                            <field name="plan_ids" widget="many2many_tags"/>
+                            <field name="server_ids" widget="many2many_tags"/>
+                            <field name="state_filter"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Metrics">
+                            <field name="include_revenue" widget="boolean_toggle"/>
+                            <field name="include_users" widget="boolean_toggle"/>
+                            <field name="include_instances" widget="boolean_toggle"/>
+                            <field name="include_performance" widget="boolean_toggle"/>
+                        </group>
+                        <group string="Output">
+                            <field name="output_format"/>
+                            <field name="include_charts" widget="boolean_toggle"/>
+                            <field name="include_details" widget="boolean_toggle"/>
+                        </group>
+                    </group>
+                    <footer>
+                        <button name="action_generate_report" string="Generate Report" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <!-- Analytics Wizard Action -->
+        <record id="action_saas_analytics_wizard" model="ir.actions.act_window">
+            <field name="name">SaaS Analytics Report</field>
+            <field name="res_model">saas.analytics.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="context">{'default_report_type': 'revenue'}</field>
+        </record>
+
+        <!-- Menu Item for Analytics Wizard -->
+        <menuitem id="menu_saas_analytics_wizard"
+                  name="Analytics Report"
+                  parent="saas_automation.menu_saas_analytics"
+                  action="action_saas_analytics_wizard"
+                  sequence="10"/>
+
+    </data>
 </odoo> 

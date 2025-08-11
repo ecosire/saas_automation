@@ -1,76 +1,371 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-        <!-- saas.instance list view -->
-        <record id="saas_instance_view_list" model="ir.ui.view">
-            <field name="name">saas.instance.view.list</field>
+        
+        <!-- Modern SaaS Instance Kanban View -->
+        <record id="saas_instance_view_kanban" model="ir.ui.view">
+            <field name="name">saas.instance.view.kanban</field>
             <field name="model">saas.instance</field>
-            <field name="type">list</field>
+            <field name="type">kanban</field>
             <field name="arch" type="xml">
-                <list>
+                <kanban class="o_saas_instance_kanban" create="true">
                     <field name="name"/>
                     <field name="subdomain"/>
-                    <field name="db_name"/>
+                    <field name="url"/>
                     <field name="odoo_version"/>
                     <field name="server_id"/>
                     <field name="plan_id"/>
                     <field name="partner_id"/>
                     <field name="state"/>
+                    <field name="active_user_count"/>
+                    <field name="expiration_date"/>
+                    <field name="is_trial"/>
+                    <field name="is_custom_domain_active"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click o_saas_instance_card" t-attf-class="#{record.state.value == 'running' ? 'o_instance_running' : ''} #{record.state.value == 'suspended' ? 'o_instance_suspended' : ''} #{record.state.value == 'draft' ? 'o_instance_draft' : ''}">
+                                
+                                <!-- Instance Header -->
+                                <div class="o_instance_header">
+                                    <div class="o_instance_title">
+                                        <h4 class="mb-0">
+                                            <i class="fa fa-server me-2"></i>
+                                            <t t-esc="record.name.value"/>
+                                        </h4>
+                                    </div>
+                                    <div class="o_instance_status">
+                                        <span t-attf-class="badge #{record.state.value == 'running' ? 'bg-success' : ''} #{record.state.value == 'suspended' ? 'bg-warning' : ''} #{record.state.value == 'draft' ? 'bg-secondary' : ''} #{record.state.value == 'deploying' ? 'bg-info' : ''} #{record.state.value == 'cancelled' ? 'bg-danger' : ''}">
+                                            <t t-esc="record.state.value"/>
+                                        </span>
+                                    </div>
+                                </div>
+
+                                <!-- Instance URL -->
+                                <div class="o_instance_url">
+                                    <a t-att-href="record.url.value" target="_blank" class="o_instance_link">
+                                        <i class="fa fa-external-link-alt me-1"></i>
+                                        <t t-esc="record.url.value"/>
+                                    </a>
+                                </div>
+
+                                <!-- Instance Details -->
+                                <div class="o_instance_details">
+                                    <div class="row g-2">
+                                        <div class="col-6">
+                                            <div class="o_detail_item">
+                                                <i class="fa fa-code me-1"></i>
+                                                <small>Version</small>
+                                                <div class="o_detail_value">
+                                                    <t t-esc="record.odoo_version.value"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="o_detail_item">
+                                                <i class="fa fa-users me-1"></i>
+                                                <small>Users</small>
+                                                <div class="o_detail_value">
+                                                    <t t-esc="record.active_user_count.value"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="o_detail_item">
+                                                <i class="fa fa-building me-1"></i>
+                                                <small>Server</small>
+                                                <div class="o_detail_value">
+                                                    <t t-esc="record.server_id.value"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-6">
+                                            <div class="o_detail_item">
+                                                <i class="fa fa-tag me-1"></i>
+                                                <small>Plan</small>
+                                                <div class="o_detail_value">
+                                                    <t t-esc="record.plan_id.value"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Instance Actions -->
+                                <div class="o_instance_actions">
+                                    <div class="row g-1">
+                                        <div class="col-4">
+                                            <button t-attf-class="btn btn-sm #{record.state.value == 'running' ? 'btn-outline-warning' : 'btn-outline-success'} w-100" 
+                                                    t-att-data-action="record.state.value == 'running' ? 'suspend' : 'deploy'"
+                                                    t-att-data-instance-id="record.id.value">
+                                                <i t-attf-class="fa #{record.state.value == 'running' ? 'fa-pause' : 'fa-play'}"></i>
+                                            </button>
+                                        </div>
+                                        <div class="col-4">
+                                            <button class="btn btn-outline-info btn-sm w-100" 
+                                                    t-att-data-action="view_details"
+                                                    t-att-data-instance-id="record.id.value">
+                                                <i class="fa fa-eye"></i>
+                                            </button>
+                                        </div>
+                                        <div class="col-4">
+                                            <button class="btn btn-outline-primary btn-sm w-100" 
+                                                    t-att-data-action="manage"
+                                                    t-att-data-instance-id="record.id.value">
+                                                <i class="fa fa-cog"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Trial Badge -->
+                                <div t-if="record.is_trial.value" class="o_trial_badge">
+                                    <span class="badge bg-warning text-dark">
+                                        <i class="fa fa-clock me-1"></i>Trial
+                                    </span>
+                                </div>
+
+                                <!-- Custom Domain Badge -->
+                                <div t-if="record.is_custom_domain_active.value" class="o_custom_domain_badge">
+                                    <span class="badge bg-info">
+                                        <i class="fa fa-globe me-1"></i>Custom Domain
+                                    </span>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <!-- Enhanced SaaS Instance List View -->
+        <record id="saas_instance_view_list" model="ir.ui.view">
+            <field name="name">saas.instance.view.list</field>
+            <field name="model">saas.instance</field>
+            <field name="type">list</field>
+            <field name="arch" type="xml">
+                <list class="o_saas_instance_list">
+                    <field name="name" decoration-info="state == 'draft'" decoration-success="state == 'running'" decoration-warning="state == 'suspended'"/>
+                    <field name="subdomain"/>
+                    <field name="url" widget="url"/>
+                    <field name="odoo_version"/>
+                    <field name="server_id"/>
+                    <field name="plan_id"/>
+                    <field name="partner_id"/>
+                    <field name="active_user_count"/>
+                    <field name="state" widget="badge" decoration-success="state == 'running'" decoration-warning="state == 'suspended'" decoration-info="state == 'draft'" decoration-danger="state == 'cancelled'"/>
+                    <field name="expiration_date"/>
+                    <field name="is_trial" widget="boolean_toggle"/>
                 </list>
             </field>
         </record>
 
-        <!-- saas.instance form view -->
+        <!-- Enhanced SaaS Instance Form View -->
         <record id="saas_instance_view_form" model="ir.ui.view">
             <field name="name">saas.instance.view.form</field>
             <field name="model">saas.instance</field>
             <field name="arch" type="xml">
-                <form string="SaaS Instance">
+                <form class="o_saas_instance_form">
                     <header>
-                        <button name="action_deploy_instance" string="Deploy" type="object" class="oe_highlight" invisible="state != 'draft'"/>
-                        <button name="action_suspend_instance" string="Suspend" type="object" invisible="state != 'running'"/>
-                        <button name="action_resume_instance" string="Resume" type="object" invisible="state != 'suspended'"/>
-                        <button name="action_cancel_instance" string="Cancel" type="object" invisible="state not in ['draft', 'running', 'suspended']"/>
+                        <div class="o_instance_header_form">
+                            <div class="o_instance_title_form">
+                                <h2 class="o_instance_name">
+                                    <i class="fa fa-server me-3"></i>
+                                    <field name="name" placeholder="Instance Name"/>
+                                </h2>
+                                <div class="o_instance_subtitle">
+                                    <span class="o_instance_url_display">
+                                        <i class="fa fa-link me-1"></i>
+                                        <field name="url" readonly="1"/>
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="o_instance_actions_form">
+                                <button name="action_deploy_instance" string="Deploy" type="object" 
+                                        class="btn btn-success" invisible="state != 'draft'">
+                                    <i class="fa fa-play me-1"></i> Deploy
+                                </button>
+                                <button name="action_suspend_instance" string="Suspend" type="object" 
+                                        class="btn btn-warning" invisible="state != 'running'">
+                                    <i class="fa fa-pause me-1"></i> Suspend
+                                </button>
+                                <button name="action_resume_instance" string="Resume" type="object" 
+                                        class="btn btn-info" invisible="state != 'suspended'">
+                                    <i class="fa fa-play me-1"></i> Resume
+                                </button>
+                                <button name="action_cancel_instance" string="Cancel" type="object" 
+                                        class="btn btn-danger" invisible="state not in ['draft', 'running', 'suspended']">
+                                    <i class="fa fa-times me-1"></i> Cancel
+                                </button>
+                            </div>
+                        </div>
                         <field name="state" widget="statusbar" statusbar_visible="draft,deploying,running,suspended,cancelled"/>
                     </header>
+                    
                     <sheet>
-                        <group>
-                            <group>
-                                <field name="name"/>
-                                <field name="subdomain"/>
-                                <field name="db_name"/>
-                                <field name="odoo_version"/>
-                            </group>
-                            <group>
-                                <field name="server_id"/>
-                                <field name="plan_id"/>
-                                <field name="partner_id"/>
-                                <field name="state"/>
-                            </group>
-                        </group>
-                        <notebook>
-                            <page string="Details">
-                                <group>
-                                    <field name="domain"/>
-                                    <field name="custom_domain"/>
-                                    <field name="is_custom_domain_active"/>
-                                </group>
-                                <group>
-                                    <button name="action_activate_custom_domain" string="Activate" type="object" invisible="is_custom_domain_active"/>
-                                    <button name="action_deactivate_custom_domain" string="Deactivate" type="object" invisible="not is_custom_domain_active"/>
-                                </group>
-                                <group>
-                                    <field name="url"/>
-                                    <field name="active_user_count"/>
-                                    <field name="expiration_date"/>
-                                    <field name="is_trial"/>
-                                </group>
+                        <!-- Instance Overview -->
+                        <div class="o_instance_overview">
+                            <div class="row g-4">
+                                <div class="col-md-8">
+                                    <div class="o_instance_main_info">
+                                        <h4><i class="fa fa-info-circle me-2"></i>Instance Information</h4>
+                                        <div class="row g-3">
+                                            <div class="col-md-6">
+                                                <label for="subdomain" class="o_form_label">Subdomain</label>
+                                                <field name="subdomain" placeholder="Enter subdomain"/>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="db_name" class="o_form_label">Database Name</label>
+                                                <field name="db_name" placeholder="Database name"/>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="odoo_version" class="o_form_label">Odoo Version</label>
+                                                <field name="odoo_version"/>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="port" class="o_form_label">Port</label>
+                                                <field name="port"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="o_instance_status_card">
+                                        <h4><i class="fa fa-chart-pie me-2"></i>Status Overview</h4>
+                                        <div class="o_status_metrics">
+                                            <div class="o_status_metric">
+                                                <div class="o_metric_icon">
+                                                    <i class="fa fa-users"></i>
+                                                </div>
+                                                <div class="o_metric_content">
+                                                    <div class="o_metric_value">
+                                                        <field name="active_user_count"/>
+                                                    </div>
+                                                    <div class="o_metric_label">Active Users</div>
+                                                </div>
+                                            </div>
+                                            <div class="o_status_metric">
+                                                <div class="o_metric_icon">
+                                                    <i class="fa fa-calendar"></i>
+                                                </div>
+                                                <div class="o_metric_content">
+                                                    <div class="o_metric_value">
+                                                        <field name="expiration_date"/>
+                                                    </div>
+                                                    <div class="o_metric_label">Expiration Date</div>
+                                                </div>
+                                            </div>
+                                            <div class="o_status_metric">
+                                                <div class="o_metric_icon">
+                                                    <i class="fa fa-clock"></i>
+                                                </div>
+                                                <div class="o_metric_content">
+                                                    <div class="o_metric_value">
+                                                        <field name="is_trial" widget="boolean_toggle"/>
+                                                    </div>
+                                                    <div class="o_metric_label">Trial Instance</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Configuration Tabs -->
+                        <notebook class="o_instance_notebook">
+                            <page string="Configuration" name="configuration">
+                                <div class="row g-4">
+                                    <div class="col-md-6">
+                                        <div class="o_config_section">
+                                            <h5><i class="fa fa-server me-2"></i>Server Configuration</h5>
+                                            <field name="server_id"/>
+                                            <field name="plan_id"/>
+                                            <field name="partner_id"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="o_config_section">
+                                            <h5><i class="fa fa-globe me-2"></i>Domain Configuration</h5>
+                                            <field name="domain"/>
+                                            <field name="custom_domain"/>
+                                            <field name="is_custom_domain_active" widget="boolean_toggle"/>
+                                            <div class="o_domain_actions">
+                                                <button name="action_activate_custom_domain" string="Activate Custom Domain" 
+                                                        type="object" class="btn btn-outline-primary btn-sm" 
+                                                        invisible="is_custom_domain_active"/>
+                                                <button name="action_deactivate_custom_domain" string="Deactivate Custom Domain" 
+                                                        type="object" class="btn btn-outline-warning btn-sm" 
+                                                        invisible="not is_custom_domain_active"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </page>
-                            <page string="Notes">
-                                <field name="notes"/>
+                            
+                            <page string="Monitoring" name="monitoring">
+                                <div class="o_monitoring_section">
+                                    <h5><i class="fa fa-chart-line me-2"></i>Performance Metrics</h5>
+                                    <div class="row g-3">
+                                        <div class="col-md-3">
+                                            <div class="o_metric_card">
+                                                <div class="o_metric_header">
+                                                    <i class="fa fa-tachometer-alt"></i>
+                                                    <span>CPU Usage</span>
+                                                </div>
+                                                <div class="o_metric_value">75%</div>
+                                                <div class="o_metric_trend text-warning">
+                                                    <i class="fa fa-arrow-up"></i> +5%
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="o_metric_card">
+                                                <div class="o_metric_header">
+                                                    <i class="fa fa-memory"></i>
+                                                    <span>Memory Usage</span>
+                                                </div>
+                                                <div class="o_metric_value">60%</div>
+                                                <div class="o_metric_trend text-success">
+                                                    <i class="fa fa-arrow-down"></i> -2%
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="o_metric_card">
+                                                <div class="o_metric_header">
+                                                    <i class="fa fa-hdd"></i>
+                                                    <span>Disk Usage</span>
+                                                </div>
+                                                <div class="o_metric_value">45%</div>
+                                                <div class="o_metric_trend text-info">
+                                                    <i class="fa fa-minus"></i> Stable
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <div class="o_metric_card">
+                                                <div class="o_metric_header">
+                                                    <i class="fa fa-network-wired"></i>
+                                                    <span>Network</span>
+                                                </div>
+                                                <div class="o_metric_value">2.5 GB</div>
+                                                <div class="o_metric_trend text-success">
+                                                    <i class="fa fa-arrow-up"></i> +12%
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </page>
+                            
+                            <page string="Notes" name="notes">
+                                <div class="o_notes_section">
+                                    <field name="notes" placeholder="Add notes about this instance..."/>
+                                </div>
                             </page>
                         </notebook>
                     </sheet>
+                    
                     <div class="oe_chatter">
                         <field name="message_follower_ids"/>
                         <field name="activity_ids"/>
@@ -80,17 +375,37 @@
             </field>
         </record>
 
-        <!-- saas.instance action window -->
+        <!-- SaaS Instance Action Window -->
         <record id="saas_instance_action" model="ir.actions.act_window">
             <field name="name">SaaS Instances</field>
             <field name="type">ir.actions.act_window</field>
             <field name="res_model">saas.instance</field>
-            <field name="view_mode">list,form</field>
+            <field name="view_mode">kanban,list,form</field>
+            <field name="view_id" ref="saas_instance_view_kanban"/>
             <field name="help" type="html">
-                <p class="o_view_nocontent_smiling_face">
-                    Create a new SaaS instance.
-                </p>
+                <div class="o_saas_instance_help">
+                    <div class="o_help_icon">
+                        <i class="fa fa-server"></i>
+                    </div>
+                    <h3>Manage Your SaaS Instances</h3>
+                    <p>Create and manage Odoo instances for your customers. Deploy, monitor, and maintain instances with ease.</p>
+                    <div class="o_help_features">
+                        <div class="o_help_feature">
+                            <i class="fa fa-rocket"></i>
+                            <span>Quick Deployment</span>
+                        </div>
+                        <div class="o_help_feature">
+                            <i class="fa fa-chart-line"></i>
+                            <span>Performance Monitoring</span>
+                        </div>
+                        <div class="o_help_feature">
+                            <i class="fa fa-shield-alt"></i>
+                            <span>Secure Management</span>
+                        </div>
+                    </div>
+                </div>
             </field>
         </record>
+
     </data>
 </odoo> 

@@ -1,4 +1,231 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    
+    <data noupdate="1">
+        
+        <!-- Instance Creation Notification -->
+        <record id="email_template_instance_created" model="mail.template">
+            <field name="name">SaaS Instance Created</field>
+            <field name="model_id" ref="saas_automation.model_saas_instance"/>
+            <field name="subject">Your SaaS Instance is Ready - {{ object.name }}</field>
+            <field name="email_from">{{ user.email_formatted }}</field>
+            <field name="partner_to">{{ object.partner_id.id }}</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px; font-size: 13px;">
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        Dear {{ object.partner_id.name }},
+                    </p>
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        Your SaaS instance <strong>{{ object.name }}</strong> has been successfully created and is now ready for use.
+                    </p>
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        <strong>Instance Details:</strong><br/>
+                        • Instance Name: {{ object.name }}<br/>
+                        • URL: <a href="{{ object.url }}">{{ object.url }}</a><br/>
+                        • Database: {{ object.db_name }}<br/>
+                        • Odoo Version: {{ object.odoo_version }}<br/>
+                        • Status: {{ object.state }}
+                    </p>
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        You can now access your instance and start using it. If you have any questions or need assistance, please don't hesitate to contact our support team.
+                    </p>
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        Best regards,<br/>
+                        The ECOSIRE Team
+                    </p>
+                </div>
+            </field>
+            <field name="lang">{{ object.partner_id.lang }}</field>
+            <field name="auto_delete" eval="True"/>
+        </record>
+
+        <!-- Subscription Activation Notification -->
+        <record id="email_template_subscription_activated" model="mail.template">
+            <field name="name">Subscription Activated</field>
+            <field name="model_id" ref="saas_automation.model_saas_subscription"/>
+            <field name="subject">Subscription Activated - {{ object.name }}</field>
+            <field name="email_from">{{ user.email_formatted }}</field>
+            <field name="partner_to">{{ object.partner_id.id }}</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px; font-size: 13px;">
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        Dear {{ object.partner_id.name }},
+                    </p>
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        Your subscription <strong>{{ object.name }}</strong> has been successfully activated.
+                    </p>
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        <strong>Subscription Details:</strong><br/>
+                        • Plan: {{ object.plan_id.name }}<br/>
+                        • Start Date: {{ object.start_date }}<br/>
+                        • End Date: {{ object.end_date }}<br/>
+                        • Price: ${{ object.price }}<br/>
+                        • Billing Cycle: {{ object.recurring_rule_type }}
+                    </p>
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        Your invoice has been generated and will be sent to you shortly. Thank you for choosing our services!
+                    </p>
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        Best regards,<br/>
+                        The ECOSIRE Team
+                    </p>
+                </div>
+            </field>
+            <field name="lang">{{ object.partner_id.lang }}</field>
+            <field name="auto_delete" eval="True"/>
+        </record>
+
+        <!-- Instance Suspension Notification -->
+        <record id="email_template_instance_suspended" model="mail.template">
+            <field name="name">Instance Suspended</field>
+            <field name="model_id" ref="saas_automation.model_saas_instance"/>
+            <field name="subject">Instance Suspended - {{ object.name }}</field>
+            <field name="email_from">{{ user.email_formatted }}</field>
+            <field name="partner_to">{{ object.partner_id.id }}</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px; font-size: 13px;">
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        Dear {{ object.partner_id.name }},
+                    </p>
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        Your SaaS instance <strong>{{ object.name }}</strong> has been suspended.
+                    </p>
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        <strong>Instance Details:</strong><br/>
+                        • Instance Name: {{ object.name }}<br/>
+                        • URL: {{ object.url }}<br/>
+                        • Status: {{ object.state }}
+                    </p>
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        To reactivate your instance, please contact our support team or update your subscription status.
+                    </p>
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        Best regards,<br/>
+                        The ECOSIRE Team
+                    </p>
+                </div>
+            </field>
+            <field name="lang">{{ object.partner_id.lang }}</field>
+            <field name="auto_delete" eval="True"/>
+        </record>
+
+        <!-- Payment Reminder -->
+        <record id="email_template_payment_reminder" model="mail.template">
+            <field name="name">Payment Reminder</field>
+            <field name="model_id" ref="saas_automation.model_saas_subscription"/>
+            <field name="subject">Payment Reminder - {{ object.name }}</field>
+            <field name="email_from">{{ user.email_formatted }}</field>
+            <field name="partner_to">{{ object.partner_id.id }}</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px; font-size: 13px;">
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        Dear {{ object.partner_id.name }},
+                    </p>
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        This is a friendly reminder that your subscription payment is due.
+                    </p>
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        <strong>Subscription Details:</strong><br/>
+                        • Subscription: {{ object.name }}<br/>
+                        • Plan: {{ object.plan_id.name }}<br/>
+                        • Amount Due: ${{ object.price }}<br/>
+                        • Due Date: {{ object.end_date }}
+                    </p>
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        Please ensure your payment is processed to avoid any service interruption.
+                    </p>
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        Best regards,<br/>
+                        The ECOSIRE Team
+                    </p>
+                </div>
+            </field>
+            <field name="lang">{{ object.partner_id.lang }}</field>
+            <field name="auto_delete" eval="True"/>
+        </record>
+
+        <!-- Welcome Email Template -->
+        <record id="email_template_welcome_saas" model="mail.template">
+            <field name="name">Welcome to SaaS Platform</field>
+            <field name="model_id" ref="saas_automation.model_saas_instance"/>
+            <field name="subject">Welcome to ECOSIRE SaaS Platform - {{ object.name }}</field>
+            <field name="email_from">{{ user.email_formatted }}</field>
+            <field name="partner_to">{{ object.partner_id.id }}</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px; font-size: 13px;">
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        Dear {{ object.partner_id.name }},
+                    </p>
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        Welcome to the ECOSIRE SaaS Platform! We're excited to have you on board.
+                    </p>
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        <strong>Your Instance Details:</strong><br/>
+                        • Instance Name: {{ object.name }}<br/>
+                        • Access URL: <a href="{{ object.url }}">{{ object.url }}</a><br/>
+                        • Odoo Version: {{ object.odoo_version }}
+                    </p>
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        <strong>Getting Started:</strong><br/>
+                        1. Access your instance using the URL above<br/>
+                        2. Set up your admin credentials<br/>
+                        3. Configure your modules and settings<br/>
+                        4. Start using your Odoo instance
+                    </p>
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        If you need any assistance, our support team is here to help. You can reach us at info@ecosire.com or visit our documentation.
+                    </p>
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        Best regards,<br/>
+                        The ECOSIRE Team<br/>
+                        <a href="https://www.ecosire.com">www.ecosire.com</a>
+                    </p>
+                </div>
+            </field>
+            <field name="lang">{{ object.partner_id.lang }}</field>
+            <field name="auto_delete" eval="True"/>
+        </record>
+
+        <!-- Migration Notification Email Template -->
+        <record id="email_template_migration_notification" model="mail.template">
+            <field name="name">Migration Notification</field>
+            <field name="model_id" ref="saas_automation.model_saas_instance"/>
+            <field name="subject">Instance Migration Notification - {{ object.name }}</field>
+            <field name="email_from">{{ user.email_formatted }}</field>
+            <field name="partner_to">{{ object.partner_id.id }}</field>
+            <field name="body_html" type="html">
+                <div style="margin: 0px; padding: 0px; font-size: 13px;">
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        Dear {{ object.partner_id.name }},
+                    </p>
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        We would like to inform you that your SaaS instance <strong>{{ object.name }}</strong> will be undergoing a scheduled migration.
+                    </p>
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        <strong>Migration Details:</strong><br/>
+                        • Instance Name: {{ object.name }}<br/>
+                        • Current URL: {{ object.url }}<br/>
+                        • Migration Type: Version Upgrade<br/>
+                        • Expected Duration: 30-60 minutes
+                    </p>
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        <strong>What to Expect:</strong><br/>
+                        • Brief service interruption during migration<br/>
+                        • Automatic backup before migration<br/>
+                        • Enhanced performance and features after migration
+                    </p>
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        We will notify you once the migration is complete. If you experience any issues, please contact our support team.
+                    </p>
+                    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+                        Best regards,<br/>
+                        The ECOSIRE Team<br/>
+                        <a href="https://www.ecosire.com">www.ecosire.com</a>
+                    </p>
+                </div>
+            </field>
+            <field name="lang">{{ object.partner_id.lang }}</field>
+            <field name="auto_delete" eval="True"/>
+        </record>
+
+    </data>
 </odoo> 

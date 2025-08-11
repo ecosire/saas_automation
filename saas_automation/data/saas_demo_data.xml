@@ -1,4 +1,209 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    
+    <data noupdate="1">
+        
+        <!-- Demo SaaS Servers -->
+        <record id="demo_saas_server_1" model="saas.server">
+            <field name="name">Demo Server 1 - Docker</field>
+            <field name="server_type">docker</field>
+            <field name="host">demo-server-1.ecosire.com</field>
+            <field name="port">22</field>
+            <field name="ssh_user">ubuntu</field>
+            <field name="max_clients">20</field>
+            <field name="is_active" eval="True"/>
+            <field name="connection_status">connected</field>
+            <field name="notes">Demo server for testing Docker-based instances</field>
+        </record>
+
+        <record id="demo_saas_server_2" model="saas.server">
+            <field name="name">Demo Server 2 - Kubernetes</field>
+            <field name="server_type">kubernetes</field>
+            <field name="host">demo-server-2.ecosire.com</field>
+            <field name="port">22</field>
+            <field name="ssh_user">admin</field>
+            <field name="max_clients">50</field>
+            <field name="is_active" eval="True"/>
+            <field name="connection_status">connected</field>
+            <field name="notes">Demo server for testing Kubernetes-based instances</field>
+        </record>
+
+        <!-- Demo SaaS Plans -->
+        <record id="demo_saas_plan_starter" model="saas.plan">
+            <field name="name">Starter Plan</field>
+            <field name="description">Perfect for small businesses and startups</field>
+            <field name="sequence">10</field>
+            <field name="price_monthly">29.99</field>
+            <field name="price_yearly">299.99</field>
+            <field name="is_active" eval="True"/>
+            <field name="max_users">5</field>
+            <field name="max_instances">1</field>
+            <field name="notes">Basic plan with essential features</field>
+        </record>
+
+        <record id="demo_saas_plan_professional" model="saas.plan">
+            <field name="name">Professional Plan</field>
+            <field name="description">Ideal for growing businesses</field>
+            <field name="sequence">20</field>
+            <field name="price_monthly">79.99</field>
+            <field name="price_yearly">799.99</field>
+            <field name="is_active" eval="True"/>
+            <field name="max_users">20</field>
+            <field name="max_instances">3</field>
+            <field name="notes">Professional plan with advanced features</field>
+        </record>
+
+        <record id="demo_saas_plan_enterprise" model="saas.plan">
+            <field name="name">Enterprise Plan</field>
+            <field name="description">For large enterprises with complex needs</field>
+            <field name="sequence">30</field>
+            <field name="price_monthly">199.99</field>
+            <field name="price_yearly">1999.99</field>
+            <field name="is_active" eval="True"/>
+            <field name="max_users">100</field>
+            <field name="max_instances">10</field>
+            <field name="notes">Enterprise plan with unlimited features</field>
+        </record>
+
+        <!-- Demo SaaS Instances -->
+        <record id="demo_saas_instance_1" model="saas.instance">
+            <field name="name">DEMO001</field>
+            <field name="subdomain">demo001</field>
+            <field name="domain">ecosire.com</field>
+            <field name="db_name">demo001_odoo</field>
+            <field name="odoo_version">18.0</field>
+            <field name="server_id" ref="demo_saas_server_1"/>
+            <field name="plan_id" ref="demo_saas_plan_starter"/>
+            <field name="partner_id" ref="demo_partner_saas_1"/>
+            <field name="state">running</field>
+            <field name="active_user_count">3</field>
+            <field name="expiration_date" eval="(DateTime.today() + relativedelta(months=1)).strftime('%Y-%m-%d')"/>
+            <field name="is_trial" eval="True"/>
+            <field name="port">8069</field>
+            <field name="notes">Demo instance for testing purposes</field>
+        </record>
+
+        <record id="demo_saas_instance_2" model="saas.instance">
+            <field name="name">DEMO002</field>
+            <field name="subdomain">demo002</field>
+            <field name="domain">ecosire.com</field>
+            <field name="db_name">demo002_odoo</field>
+            <field name="odoo_version">18.0</field>
+            <field name="server_id" ref="demo_saas_server_2"/>
+            <field name="plan_id" ref="demo_saas_plan_professional"/>
+            <field name="partner_id" ref="demo_partner_saas_2"/>
+            <field name="state">running</field>
+            <field name="active_user_count">12</field>
+            <field name="expiration_date" eval="(DateTime.today() + relativedelta(months=3)).strftime('%Y-%m-%d')"/>
+            <field name="is_trial" eval="False"/>
+            <field name="port">8070</field>
+            <field name="notes">Professional demo instance</field>
+        </record>
+
+        <record id="demo_saas_instance_3" model="saas.instance">
+            <field name="name">DEMO003</field>
+            <field name="subdomain">demo003</field>
+            <field name="domain">ecosire.com</field>
+            <field name="db_name">demo003_odoo</field>
+            <field name="odoo_version">17.0</field>
+            <field name="server_id" ref="demo_saas_server_1"/>
+            <field name="plan_id" ref="demo_saas_plan_enterprise"/>
+            <field name="partner_id" ref="demo_partner_saas_3"/>
+            <field name="state">suspended</field>
+            <field name="active_user_count">45</field>
+            <field name="expiration_date" eval="(DateTime.today() - relativedelta(days=5)).strftime('%Y-%m-%d')"/>
+            <field name="is_trial" eval="False"/>
+            <field name="port">8071</field>
+            <field name="notes">Suspended enterprise instance</field>
+        </record>
+
+        <!-- Demo SaaS Subscriptions -->
+        <record id="demo_saas_subscription_1" model="saas.subscription">
+            <field name="name">SUB001</field>
+            <field name="partner_id" ref="base.res_partner_1"/>
+            <field name="instance_id" ref="demo_saas_instance_1"/>
+            <field name="plan_id" ref="demo_saas_plan_starter"/>
+            <field name="start_date" eval="DateTime.today().strftime('%Y-%m-%d')"/>
+            <field name="end_date" eval="(DateTime.today() + relativedelta(months=1)).strftime('%Y-%m-%d')"/>
+            <field name="recurring_interval">1</field>
+            <field name="recurring_rule_type">monthly</field>
+            <field name="price">29.99</field>
+            <field name="state">active</field>
+            <field name="notes">Active starter subscription</field>
+        </record>
+
+        <record id="demo_saas_subscription_2" model="saas.subscription">
+            <field name="name">SUB002</field>
+            <field name="partner_id" ref="base.res_partner_2"/>
+            <field name="instance_id" ref="demo_saas_instance_2"/>
+            <field name="plan_id" ref="demo_saas_plan_professional"/>
+            <field name="start_date" eval="(DateTime.today() - relativedelta(months=2)).strftime('%Y-%m-%d')"/>
+            <field name="end_date" eval="(DateTime.today() + relativedelta(months=1)).strftime('%Y-%m-%d')"/>
+            <field name="recurring_interval">3</field>
+            <field name="recurring_rule_type">monthly</field>
+            <field name="price">79.99</field>
+            <field name="state">active</field>
+            <field name="notes">Active professional subscription</field>
+        </record>
+
+        <record id="demo_saas_subscription_3" model="saas.subscription">
+            <field name="name">SUB003</field>
+            <field name="partner_id" ref="base.res_partner_3"/>
+            <field name="instance_id" ref="demo_saas_instance_3"/>
+            <field name="plan_id" ref="demo_saas_plan_enterprise"/>
+            <field name="start_date" eval="(DateTime.today() - relativedelta(months=6)).strftime('%Y-%m-%d')"/>
+            <field name="end_date" eval="(DateTime.today() - relativedelta(days=5)).strftime('%Y-%m-%d')"/>
+            <field name="recurring_interval">6</field>
+            <field name="recurring_rule_type">monthly</field>
+            <field name="price">199.99</field>
+            <field name="state">suspended</field>
+            <field name="notes">Suspended enterprise subscription</field>
+        </record>
+
+        <!-- Demo Partners for SaaS -->
+        <record id="demo_partner_saas_1" model="res.partner">
+            <field name="name">TechStart Solutions</field>
+            <field name="email">contact@techstart.com</field>
+            <field name="phone">+1-555-0123</field>
+            <field name="is_company" eval="True"/>
+            <field name="customer_rank" eval="1"/>
+            <field name="supplier_rank" eval="0"/>
+            <field name="street">123 Innovation Drive</field>
+            <field name="city">San Francisco</field>
+            <field name="state_id" ref="base.state_us_5"/>
+            <field name="zip">94105</field>
+            <field name="country_id" ref="base.us"/>
+            <field name="comment">Demo partner for SaaS testing</field>
+        </record>
+
+        <record id="demo_partner_saas_2" model="res.partner">
+            <field name="name">Global Enterprises Ltd</field>
+            <field name="email">info@globalenterprises.com</field>
+            <field name="phone">+1-555-0456</field>
+            <field name="is_company" eval="True"/>
+            <field name="customer_rank" eval="1"/>
+            <field name="supplier_rank" eval="0"/>
+            <field name="street">456 Corporate Plaza</field>
+            <field name="city">New York</field>
+            <field name="state_id" ref="base.state_us_33"/>
+            <field name="zip">10001</field>
+            <field name="country_id" ref="base.us"/>
+            <field name="comment">Enterprise demo partner</field>
+        </record>
+
+        <record id="demo_partner_saas_3" model="res.partner">
+            <field name="name">Small Business Co</field>
+            <field name="email">hello@smallbusiness.com</field>
+            <field name="phone">+1-555-0789</field>
+            <field name="is_company" eval="True"/>
+            <field name="customer_rank" eval="1"/>
+            <field name="supplier_rank" eval="0"/>
+            <field name="street">789 Main Street</field>
+            <field name="city">Austin</field>
+            <field name="state_id" ref="base.state_us_44"/>
+            <field name="zip">73301</field>
+            <field name="country_id" ref="base.us"/>
+            <field name="comment">Small business demo partner</field>
+        </record>
+
+    </data>
 </odoo> 

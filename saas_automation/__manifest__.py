@@ -96,8 +96,8 @@ Contact: info@ecosire.com | Website: https://www.ecosire.com
         'data/saas_plan_data.xml',
         'data/saas_product_data.xml',
         'data/saas_cron_data.xml',
-        # 'data/mail_template_data.xml',
-        # 'data/saas_demo_data.xml',
+        'data/mail_template_data.xml',
+        'data/saas_demo_data.xml',
         # Views
         'views/saas_menu_structure.xml',
         'views/saas_dashboard_views.xml',
@@ -116,14 +116,14 @@ Contact: info@ecosire.com | Website: https://www.ecosire.com
         # Wizards
         'wizard/saas_instance_creation_wizard_views.xml',
         'wizard/saas_backup_restore_wizard_views.xml',
-        # 'wizard/saas_migration_wizard_views.xml',
-        # 'wizard/saas_billing_wizard_views.xml',
-        # 'wizard/saas_analytics_wizard_views.xml',
+        'wizard/saas_migration_wizard_views.xml',
+        'wizard/saas_billing_wizard_views.xml',
+        'wizard/saas_analytics_wizard_views.xml',
         # Reports
-        # 'report/saas_reports.xml',
+        'report/saas_reports.xml',
         'report/saas_subscription_report.xml',
-        # 'report/saas_billing_report.xml',
-        # 'report/saas_analytics_report.xml',
+        'report/saas_billing_report.xml',
+        'report/saas_analytics_report.xml',
     ],
     'assets': {
         'web.assets_backend': [

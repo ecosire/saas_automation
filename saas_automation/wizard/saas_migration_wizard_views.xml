@@ -1,4 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    
+    <data>
+        
+        <!-- Migration Wizard Form View -->
+        <record id="view_saas_migration_wizard_form" model="ir.ui.view">
+            <field name="name">saas.migration.wizard.form</field>
+            <field name="model">saas.migration.wizard</field>
+            <field name="arch" type="xml">
+                <form string="SaaS Instance Migration">
+                    <group>
+                        <group string="Migration Configuration">
+                            <field name="migration_type"/>
+                            <field name="source_version"/>
+                            <field name="target_version"/>
+                            <field name="migration_date"/>
+                            <field name="backup_before_migration" widget="boolean_toggle"/>
+                        </group>
+                        <group string="Instance Selection">
+                            <field name="instance_ids" widget="many2many_tags"/>
+                            <field name="server_ids" widget="many2many_tags"/>
+                            <field name="include_suspended" widget="boolean_toggle"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Migration Options">
+                            <field name="auto_backup" widget="boolean_toggle"/>
+                            <field name="validate_migration" widget="boolean_toggle"/>
+                            <field name="notify_customers" widget="boolean_toggle"/>
+                            <field name="rollback_on_failure" widget="boolean_toggle"/>
+                        </group>
+                        <group string="Advanced Settings">
+                            <field name="maintenance_window_start"/>
+                            <field name="maintenance_window_end"/>
+                            <field name="max_downtime_hours"/>
+                            <field name="parallel_migrations"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="migration_plan_ids" readonly="1">
+                            <tree editable="bottom">
+                                <field name="instance_id"/>
+                                <field name="current_version"/>
+                                <field name="target_version"/>
+                                <field name="estimated_duration"/>
+                                <field name="risk_level"/>
+                                <field name="include_in_migration" widget="boolean_toggle"/>
+                            </tree>
+                        </field>
+                    </group>
+                    <footer>
+                        <button name="action_validate_migration" string="Validate Migration" type="object" class="btn-secondary"/>
+                        <button name="action_start_migration" string="Start Migration" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <!-- Migration Wizard Action -->
+        <record id="action_saas_migration_wizard" model="ir.actions.act_window">
+            <field name="name">SaaS Instance Migration</field>
+            <field name="res_model">saas.migration.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="context">{'default_migration_type': 'version_upgrade'}</field>
+        </record>
+
+        <!-- Menu Item for Migration Wizard -->
+        <menuitem id="menu_saas_migration_wizard"
+                  name="Instance Migration"
+                  parent="saas_automation.menu_saas_automation"
+                  action="action_saas_migration_wizard"
+                  sequence="20"/>
+
+    </data>
 </odoo> 

@@ -7,3 +7,11 @@ access_saas_billing_manager,saas.billing manager,model_saas_billing,group_saas_m
 access_saas_analytics_manager,saas.analytics manager,model_saas_analytics,group_saas_manager,1,1,1,1
 access_saas_automation_manager,saas.automation manager,model_saas_automation,group_saas_manager,1,1,1,1
 access_saas_integration_manager,saas.integration manager,model_saas_integration,group_saas_manager,1,1,1,1
+access_saas_dashboard_manager,saas.dashboard manager,model_saas_dashboard,group_saas_manager,1,1,1,1
+access_saas_instance_creation_wizard_manager,saas.instance.creation.wizard manager,model_saas_instance_creation_wizard,group_saas_manager,1,1,1,1
+access_saas_backup_restore_wizard_manager,saas.backup.restore.wizard manager,model_saas_backup_restore_wizard,group_saas_manager,1,1,1,1
+access_saas_analytics_wizard_manager,saas.analytics.wizard manager,model_saas_analytics_wizard,group_saas_manager,1,1,1,1
+access_saas_billing_wizard_manager,saas.billing.wizard manager,model_saas_billing_wizard,group_saas_manager,1,1,1,1
+access_saas_billing_wizard_line_manager,saas.billing.wizard.line manager,model_saas_billing_wizard_line,group_saas_manager,1,1,1,1
+access_saas_migration_wizard_manager,saas.migration.wizard manager,model_saas_migration_wizard,group_saas_manager,1,1,1,1
+access_saas_migration_wizard_line_manager,saas.migration.wizard.line manager,model_saas_migration_wizard_line,group_saas_manager,1,1,1,1
