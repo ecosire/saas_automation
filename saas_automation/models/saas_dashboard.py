@@ -43,18 +43,29 @@ class SaasDashboard(models.Model):
             record.suspended_instances = len(instances.filtered(lambda r: r.state == 'suspended'))
             
             # User metrics
-            record.total_users = sum(instances.mapped('active_user_count'))
-            record.active_users = sum(instances.filtered(lambda r: r.state == 'running').mapped('active_user_count'))
+            try:
+                record.total_users = sum(instances.mapped('active_user_count'))
+                record.active_users = sum(instances.filtered(lambda r: r.state == 'running').mapped('active_user_count'))
+            except Exception:
+                record.total_users = 0
+                record.active_users = 0
             
             # Financial metrics
-            active_subscriptions = self.env['saas.subscription'].search([('state', '=', 'active')])
-            record.mrr = sum(active_subscriptions.mapped('price'))
-            record.arr = record.mrr * 12
+            try:
+                active_subscriptions = self.env['saas.subscription'].search([('state', '=', 'active')])
+                record.mrr = sum(active_subscriptions.mapped('price'))
+                record.arr = record.mrr * 12
+            except Exception:
+                record.mrr = 0
+                record.arr = 0
             
             # Calculate churn rate (simplified)
-            total_subscriptions = len(self.env['saas.subscription'].search([]))
-            cancelled_subscriptions = len(self.env['saas.subscription'].search([('state', '=', 'cancelled')]))
-            record.churn_rate = (cancelled_subscriptions / total_subscriptions * 100) if total_subscriptions > 0 else 0
+            try:
+                total_subscriptions = len(self.env['saas.subscription'].search([]))
+                cancelled_subscriptions = len(self.env['saas.subscription'].search([('state', '=', 'cancelled')]))
+                record.churn_rate = (cancelled_subscriptions / total_subscriptions * 100) if total_subscriptions > 0 else 0
+            except Exception:
+                record.churn_rate = 0
             
             # Revenue growth (simplified calculation)
             record.revenue_growth = 15.0  # Placeholder - should be calculated from historical data
@@ -62,8 +73,16 @@ class SaasDashboard(models.Model):
             # Server utilization
             servers = self.env['saas.server'].search([('is_active', '=', True)])
             if servers:
-                total_utilization = sum(servers.mapped('get_server_utilization_percentage'))
-                record.server_utilization = total_utilization / len(servers)
+                try:
+                    total_utilization = sum(servers.mapped('get_server_utilization_percentage'))
+                    record.server_utilization = total_utilization / len(servers)
+                except (KeyError, AttributeError):
+                    # Fallback calculation if method is not available
+                    total_utilization = 0
+                    for server in servers:
+                        if server.max_clients > 0:
+                            total_utilization += (server.total_clients / server.max_clients) * 100
+                    record.server_utilization = total_utilization / len(servers) if servers else 0
             else:
                 record.server_utilization = 0
             

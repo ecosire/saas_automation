@@ -2,6 +2,46 @@
 <odoo>
     <data noupdate="1">
         
+        <!-- Demo Partners for SaaS (must be first) -->
+        <record id="demo_partner_saas_1" model="res.partner">
+            <field name="name">TechStart Solutions</field>
+            <field name="email">contact@techstart.com</field>
+            <field name="phone">+1-555-0123</field>
+            <field name="is_company" eval="True"/>
+            <field name="customer_rank" eval="1"/>
+            <field name="supplier_rank" eval="0"/>
+            <field name="street">123 Innovation Drive</field>
+            <field name="city">San Francisco</field>
+            <field name="zip">94105</field>
+            <field name="comment">Demo partner for SaaS testing</field>
+        </record>
+
+        <record id="demo_partner_saas_2" model="res.partner">
+            <field name="name">Global Enterprises Ltd</field>
+            <field name="email">info@globalenterprises.com</field>
+            <field name="phone">+1-555-0456</field>
+            <field name="is_company" eval="True"/>
+            <field name="customer_rank" eval="1"/>
+            <field name="supplier_rank" eval="0"/>
+            <field name="street">456 Corporate Plaza</field>
+            <field name="city">New York</field>
+            <field name="zip">10001</field>
+            <field name="comment">Enterprise demo partner</field>
+        </record>
+
+        <record id="demo_partner_saas_3" model="res.partner">
+            <field name="name">Small Business Co</field>
+            <field name="email">hello@smallbusiness.com</field>
+            <field name="phone">+1-555-0789</field>
+            <field name="is_company" eval="True"/>
+            <field name="customer_rank" eval="1"/>
+            <field name="supplier_rank" eval="0"/>
+            <field name="street">789 Main Street</field>
+            <field name="city">Austin</field>
+            <field name="zip">73301</field>
+            <field name="comment">Small business demo partner</field>
+        </record>
+
         <!-- Demo SaaS Servers -->
         <record id="demo_saas_server_1" model="saas.server">
             <field name="name">Demo Server 1 - Docker</field>
@@ -119,7 +159,7 @@
         <!-- Demo SaaS Subscriptions -->
         <record id="demo_saas_subscription_1" model="saas.subscription">
             <field name="name">SUB001</field>
-            <field name="partner_id" ref="base.res_partner_1"/>
+            <field name="partner_id" ref="demo_partner_saas_1"/>
             <field name="instance_id" ref="demo_saas_instance_1"/>
             <field name="plan_id" ref="demo_saas_plan_starter"/>
             <field name="start_date" eval="DateTime.today().strftime('%Y-%m-%d')"/>
@@ -133,7 +173,7 @@
 
         <record id="demo_saas_subscription_2" model="saas.subscription">
             <field name="name">SUB002</field>
-            <field name="partner_id" ref="base.res_partner_2"/>
+            <field name="partner_id" ref="demo_partner_saas_2"/>
             <field name="instance_id" ref="demo_saas_instance_2"/>
             <field name="plan_id" ref="demo_saas_plan_professional"/>
             <field name="start_date" eval="(DateTime.today() - relativedelta(months=2)).strftime('%Y-%m-%d')"/>
@@ -147,7 +187,7 @@
 
         <record id="demo_saas_subscription_3" model="saas.subscription">
             <field name="name">SUB003</field>
-            <field name="partner_id" ref="base.res_partner_3"/>
+            <field name="partner_id" ref="demo_partner_saas_3"/>
             <field name="instance_id" ref="demo_saas_instance_3"/>
             <field name="plan_id" ref="demo_saas_plan_enterprise"/>
             <field name="start_date" eval="(DateTime.today() - relativedelta(months=6)).strftime('%Y-%m-%d')"/>
@@ -157,52 +197,6 @@
             <field name="price">199.99</field>
             <field name="state">suspended</field>
             <field name="notes">Suspended enterprise subscription</field>
-        </record>
-
-        <!-- Demo Partners for SaaS -->
-        <record id="demo_partner_saas_1" model="res.partner">
-            <field name="name">TechStart Solutions</field>
-            <field name="email">contact@techstart.com</field>
-            <field name="phone">+1-555-0123</field>
-            <field name="is_company" eval="True"/>
-            <field name="customer_rank" eval="1"/>
-            <field name="supplier_rank" eval="0"/>
-            <field name="street">123 Innovation Drive</field>
-            <field name="city">San Francisco</field>
-            <field name="state_id" ref="base.state_us_5"/>
-            <field name="zip">94105</field>
-            <field name="country_id" ref="base.us"/>
-            <field name="comment">Demo partner for SaaS testing</field>
-        </record>
-
-        <record id="demo_partner_saas_2" model="res.partner">
-            <field name="name">Global Enterprises Ltd</field>
-            <field name="email">info@globalenterprises.com</field>
-            <field name="phone">+1-555-0456</field>
-            <field name="is_company" eval="True"/>
-            <field name="customer_rank" eval="1"/>
-            <field name="supplier_rank" eval="0"/>
-            <field name="street">456 Corporate Plaza</field>
-            <field name="city">New York</field>
-            <field name="state_id" ref="base.state_us_33"/>
-            <field name="zip">10001</field>
-            <field name="country_id" ref="base.us"/>
-            <field name="comment">Enterprise demo partner</field>
-        </record>
-
-        <record id="demo_partner_saas_3" model="res.partner">
-            <field name="name">Small Business Co</field>
-            <field name="email">hello@smallbusiness.com</field>
-            <field name="phone">+1-555-0789</field>
-            <field name="is_company" eval="True"/>
-            <field name="customer_rank" eval="1"/>
-            <field name="supplier_rank" eval="0"/>
-            <field name="street">789 Main Street</field>
-            <field name="city">Austin</field>
-            <field name="state_id" ref="base.state_us_44"/>
-            <field name="zip">73301</field>
-            <field name="country_id" ref="base.us"/>
-            <field name="comment">Small business demo partner</field>
         </record>
 
     </data>

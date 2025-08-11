@@ -37,16 +37,7 @@
                         </group>
                     </group>
                     <group>
-                        <field name="migration_plan_ids" readonly="1">
-                            <tree editable="bottom">
-                                <field name="instance_id"/>
-                                <field name="current_version"/>
-                                <field name="target_version"/>
-                                <field name="estimated_duration"/>
-                                <field name="risk_level"/>
-                                <field name="include_in_migration" widget="boolean_toggle"/>
-                            </tree>
-                        </field>
+                        <field name="migration_plan_ids" readonly="1"/>
                     </group>
                     <footer>
                         <button name="action_validate_migration" string="Validate Migration" type="object" class="btn-secondary"/>
@@ -69,7 +60,7 @@
         <!-- Menu Item for Migration Wizard -->
         <menuitem id="menu_saas_migration_wizard"
                   name="Instance Migration"
-                  parent="saas_automation.menu_saas_automation"
+                  parent="saas_automation.menu_saas_automation_action"
                   action="action_saas_migration_wizard"
                   sequence="20"/>
 

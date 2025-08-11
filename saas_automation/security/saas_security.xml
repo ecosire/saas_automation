@@ -1,24 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data noupdate="1">
+        <!-- SaaS Module Category -->
+        <record id="module_category_saas" model="ir.module.category">
+            <field name="name">SaaS Automation</field>
+            <field name="description">Manage SaaS automation features</field>
+            <field name="sequence">20</field>
+        </record>
+        
         <!-- SaaS Manager Group - with conflict prevention -->
         <record id="group_saas_manager" model="res.groups">
             <field name="name">SaaS Manager</field>
-            <field name="category_id" ref="base.module_category_services"/>
+            <field name="category_id" ref="module_category_saas"/>
             <field name="comment">Full access to SaaS automation features</field>
         </record>
         
         <!-- SaaS User Group - for limited access -->
         <record id="group_saas_user" model="res.groups">
             <field name="name">SaaS User</field>
-            <field name="category_id" ref="base.module_category_services"/>
+            <field name="category_id" ref="module_category_saas"/>
             <field name="comment">Basic access to SaaS features</field>
         </record>
         
         <!-- SaaS Admin Group - for administrative tasks -->
         <record id="group_saas_admin" model="res.groups">
             <field name="name">SaaS Administrator</field>
-            <field name="category_id" ref="base.module_category_services"/>
+            <field name="category_id" ref="module_category_saas"/>
             <field name="implied_ids" eval="[(4, ref('saas_automation.group_saas_manager'))]"/>
             <field name="comment">Administrative access to SaaS automation</field>
         </record>

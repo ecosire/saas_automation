@@ -1,5 +1,5 @@
 {
-    'name': 'SaaS Automation - Complete Cloud Management Suite',
+    'name': 'SaaS Automation',
     'version': '18.0.1.0.0',
     'category': 'SaaS/Cloud Management',
     'sequence': 10,

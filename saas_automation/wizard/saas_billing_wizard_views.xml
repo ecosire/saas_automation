@@ -36,15 +36,7 @@
                         </group>
                     </group>
                     <group>
-                        <field name="preview_line_ids" readonly="1">
-                            <tree editable="bottom">
-                                <field name="partner_id"/>
-                                <field name="subscription_id"/>
-                                <field name="amount"/>
-                                <field name="description"/>
-                                <field name="include_invoice" widget="boolean_toggle"/>
-                            </tree>
-                        </field>
+                        <field name="preview_line_ids" readonly="1"/>
                     </group>
                     <footer>
                         <button name="action_preview_billing" string="Preview" type="object" class="btn-secondary"/>
@@ -67,7 +59,7 @@
         <!-- Menu Item for Billing Wizard -->
         <menuitem id="menu_saas_billing_wizard"
                   name="Billing Operations"
-                  parent="saas_automation.menu_saas_billing"
+                  parent="saas_automation.menu_saas_billing_action"
                   action="action_saas_billing_wizard"
                   sequence="10"/>
 

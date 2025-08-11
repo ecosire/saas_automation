@@ -55,7 +55,7 @@
         <!-- Menu Item for Analytics Wizard -->
         <menuitem id="menu_saas_analytics_wizard"
                   name="Analytics Report"
-                  parent="saas_automation.menu_saas_analytics"
+                  parent="saas_automation.menu_saas_analytics_action"
                   action="action_saas_analytics_wizard"
                   sequence="10"/>
 
